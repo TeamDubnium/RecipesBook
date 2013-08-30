@@ -5,6 +5,7 @@ namespace Recipies.Model
         Kilogram = 1,
         Gram = 2,
         Liter = 3,
-        Mililiter = 4
+        Mililiter = 4,
+        ByTaste = 5
     }
 }
