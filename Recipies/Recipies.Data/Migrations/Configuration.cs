@@ -49,8 +49,6 @@ namespace Recipies.Data.Migrations
             Recipe[] recipies = new Recipe[]
             {
                 new Recipe {Title = "TestUser"},
-
-
             };
             
 

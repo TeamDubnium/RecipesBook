@@ -31,7 +31,7 @@ namespace Recipies.Model
 
         public virtual ICollection<Recipe> MyRecipes { get; set; }
 
-       // public virtual ICollection<Recipe> Favourites { get; set; }
+        public virtual ICollection<Recipe> Favourites { get; set; }
 
         public User()
         {
