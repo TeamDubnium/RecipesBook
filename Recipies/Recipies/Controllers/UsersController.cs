@@ -146,6 +146,7 @@ namespace Recipies.Controllers
                 sessionKeyBuilder.Append(SessionKeyChars[index]);
             }
 
+
             return sessionKeyBuilder.ToString();
         }
 
