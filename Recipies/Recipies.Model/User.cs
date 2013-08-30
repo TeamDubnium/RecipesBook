@@ -26,6 +26,8 @@ namespace Recipies.Model
         [StringLength(50)]
         public string SessionKey { get; set; }
 
+        public Role Role { get; set; }
+
         public virtual ICollection<Recipe> MyRecipes { get; set; }
 
         public virtual ICollection<Recipe> Favourites { get; set; }
@@ -34,6 +36,7 @@ namespace Recipies.Model
         {
             this.MyRecipes = new HashSet<Recipe>();
             this.Favourites = new HashSet<Recipe>();
+            this.Role = Role.Client;
         }
     }
 }

@@ -1,11 +1,20 @@
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
 namespace Recipies.Model
 {
-    public enum Category
+    public class Category
     {
-        Breakfast = 1,
-        Desert = 2,
-        MainMeal = 3,
-        Soup = 4,
-        Salad = 5
+        [Key]
+        public int CategoryId { get; set; }
+
+        public string Name { get; set; }
+
+        public ICollection<Recipe> Recipes { get; set; }
+
+        public Category()
+        {
+            this.Recipes = new HashSet<Recipe>();
+        }
     }
 }
