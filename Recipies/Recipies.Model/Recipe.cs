@@ -9,10 +9,16 @@ namespace Recipies.Model
         [Key]
         public int RecipeId { get; set; }
 
+        [Required]
+        [StringLength(30, MinimumLength = 6, ErrorMessage =
+             "Title must be between 6 and 30 characters long.")]
         public string Title { get; set; }
 
+        [Required]
+        [MinLength(10)]
         public string Content { get; set; }
 
+        [Required]
         public virtual User User { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }

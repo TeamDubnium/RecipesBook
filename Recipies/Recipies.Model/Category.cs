@@ -8,6 +8,7 @@ namespace Recipies.Model
         [Key]
         public int CategoryId { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
         public ICollection<Recipe> Recipes { get; set; }
