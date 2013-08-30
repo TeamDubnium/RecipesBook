@@ -4,8 +4,8 @@ namespace Recipies.Model
 {
     public class Product
     {
-        [Key]
-        public int ProductId { get; set; }
+       
+        public int Id { get; set; }
 
         [Required]
         [StringLength(20, MinimumLength = 1, ErrorMessage =

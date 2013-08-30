@@ -245,6 +245,10 @@
       <Project>{F614E569-6559-45CD-9445-5FE184340CBB}</Project>
       <Name>Recipies.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Recipies.Model\Recipies.Model.csproj">
+      <Project>{15f94444-2022-45d3-aee5-d73f18a8b4bc}</Project>
+      <Name>Recipies.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

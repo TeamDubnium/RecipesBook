@@ -9,5 +9,6 @@ namespace Recipies.Controllers
 {
     public class RecipesController : BaseApiController
     {
+
     }
 }
