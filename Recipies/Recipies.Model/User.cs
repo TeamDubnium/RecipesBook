@@ -19,7 +19,6 @@ namespace Recipies.Model
         [Required(ErrorMessage = "UserName is required.")]
         public string Username { get; set; }
 
-        
         [StringLength(40)]
         [Required(ErrorMessage = "AuthCode is required.")]
         public string AuthCode { get; set; }
