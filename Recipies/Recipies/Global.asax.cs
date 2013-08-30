@@ -19,6 +19,8 @@ namespace Recipies
         {
             AreaRegistration.RegisterAllAreas();
 
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -26,10 +28,15 @@ namespace Recipies
 
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<RecipesContext, Configuration>());
 
-            using (RecipesContext context = new RecipesContext())
-            {
-                context.Database.Initialize(true);
-            }
+            //using (RecipesContext context = new RecipesContext())
+            //{
+
+            //    context.Products.Count();
+
+            //    //context.Database.Initialize(true);
+            //}
+
+         
         }
     }
 }
