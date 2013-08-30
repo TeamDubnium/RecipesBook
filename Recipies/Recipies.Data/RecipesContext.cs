@@ -23,5 +23,24 @@ namespace Recipies.Data
         {
         }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>()
+                .HasMany(m => m.MyRecipes)
+                .WithRequired(p=>p.Creator)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<User>()
+                .HasMany(m => m.Favourites)
+                .WithMany(p => p.Fans)
+                .Map(a =>
+                {
+                    a.ToTable("UsersFavourites");
+                    a.MapLeftKey("UserId");
+                    a.MapRightKey("Id");
+                });
+        }
     }
 }

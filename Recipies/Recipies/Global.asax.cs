@@ -28,13 +28,13 @@ namespace Recipies
 
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<RecipesContext, Configuration>());
 
-            //using (RecipesContext context = new RecipesContext())
-            //{
+            using (RecipesContext context = new RecipesContext())
+            {
 
-            //    context.Products.Count();
+                context.Products.Count();
 
-            //    //context.Database.Initialize(true);
-            //}
+                //context.Database.Initialize(true);
+            }
 
          
         }
