@@ -6,32 +6,32 @@ namespace Recipies.Model
 {
     public class Recipe
     {
-
         public int Id { get; set; }
 
-        //[Required]
-        [StringLength(30, MinimumLength = 6, ErrorMessage =
+        [Required]
+        [StringLength(40, MinimumLength = 6, ErrorMessage =
              "Title must be between 6 and 30 characters long.")]
         public string Title { get; set; }
 
-        //[Required]
+        [Required]
         [MinLength(10)]
         public string Content { get; set; }
 
-      
-        //[ForeignKey("User")]
-        //public int UserId { get; set; }
+        [Required]
+        public virtual Category Category { get; set; }
 
-        public virtual User User { get; set; }
+        //[InverseProperty("MyRecepies")]
+        public virtual User Creator { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
 
-       // public virtual ICollection<Recipe> Users { get; set; }
+        //[InverseProperty("Favorites")]
+        public virtual ICollection<User> Fans { get; set; }
 
         public Recipe()
         {
             this.Products = new HashSet<Product>();
-           // this.Users = new HashSet<Recipe>();
+            this.Fans = new HashSet<User>();
         }
     }
 }
