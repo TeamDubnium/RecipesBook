@@ -5,7 +5,7 @@ namespace Recipies.Model
     public class RecipeFans
     {
         [Key]
-        public int RecipeFanId { get; set; }
+        public int RecipeFansId { get; set; }
 
         public int RecipeId { get; set; }
 

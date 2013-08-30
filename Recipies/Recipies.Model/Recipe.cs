@@ -13,7 +13,7 @@ namespace Recipies.Model
 
         public string Content { get; set; }
 
-        public virtual User Creator { get; set; }
+        public virtual User User { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
 
