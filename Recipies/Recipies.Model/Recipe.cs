@@ -17,12 +17,12 @@ namespace Recipies.Model
 
         public virtual ICollection<Product> Products { get; set; }
 
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<RecipeFans> Fans { get; set; }
 
         public Recipe()
         {
             this.Products = new HashSet<Product>();
-            this.Users = new HashSet<User>();
+            this.Fans = new HashSet<RecipeFans>();
         }
     }
 }

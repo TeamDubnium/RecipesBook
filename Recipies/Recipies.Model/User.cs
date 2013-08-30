@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Recipies.Model
 {
@@ -30,12 +28,12 @@ namespace Recipies.Model
 
         public virtual ICollection<Recipe> MyRecipes { get; set; }
 
-        public virtual ICollection<Recipe> Favourites { get; set; }
+        public virtual ICollection<RecipeFans> Favourites { get; set; }
 
         public User()
         {
             this.MyRecipes = new HashSet<Recipe>();
-            this.Favourites = new HashSet<Recipe>();
+            this.Favourites = new HashSet<RecipeFans>();
             this.Role = Role.Client;
         }
     }
