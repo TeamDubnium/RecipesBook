@@ -18,17 +18,16 @@ namespace Recipies.Model
         [MinLength(10)]
         public string Content { get; set; }
 
-        [Required]
-        public virtual User User { get; set; }
+        public virtual User Creator { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
 
-        public virtual ICollection<RecipeFans> Fans { get; set; }
+        public virtual ICollection<User> Fans { get; set; }
 
         public Recipe()
         {
             this.Products = new HashSet<Product>();
-            this.Fans = new HashSet<RecipeFans>();
+            this.Fans = new HashSet<User>();
         }
     }
 }

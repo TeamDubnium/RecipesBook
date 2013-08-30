@@ -46,6 +46,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -127,10 +128,13 @@
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RecipesController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\LoggedUserModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -235,7 +239,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -244,6 +247,10 @@
     <ProjectReference Include="..\Recipies.Data\Recipies.Data.csproj">
       <Project>{F614E569-6559-45CD-9445-5FE184340CBB}</Project>
       <Name>Recipies.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Recipies.Model\Recipies.Model.csproj">
+      <Project>{15f94444-2022-45d3-aee5-d73f18a8b4bc}</Project>
+      <Name>Recipies.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
