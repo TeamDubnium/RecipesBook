@@ -74,6 +74,68 @@ namespace Recipies.Controllers
             return responseMsg;
         }
 
+        [HttpPost]
+        [ActionName("login")]
+        public HttpResponseMessage PostLoginUser(UserModel model)
+        {
+            var responseMsg = this.PerformOperationAndHandleExceptions(() =>
+            {
+                var dbContext = new RecipesContext();
+                using (dbContext)
+                {
+                    this.ValidateUsername(model.Username);
+                    this.ValidateAuthCode(model.AuthCode);
+
+                    var usernameToLower = model.Username.ToLower();
+
+                    var user = dbContext.Users.FirstOrDefault(
+                        usr => usr.Username == usernameToLower
+                        && usr.AuthCode == model.AuthCode);
+
+                    if (user == null)
+                    {
+                        throw new InvalidOperationException("Invalid username or password");
+                    }
+
+                    if (user.SessionKey == null)
+                    {
+                        user.SessionKey = this.GenerateSessionKey(user.UserId);
+                        dbContext.SaveChanges();
+                    }
+
+                    var loggedModel = new LoggedUserModel()
+                    {
+                        Username = user.Username,
+                        SessionKey = user.SessionKey
+                    };
+
+                    var response = this.Request.CreateResponse(HttpStatusCode.Created, loggedModel);
+                    return response;
+                }
+            });
+
+            return responseMsg;
+        }
+
+        [HttpPut]
+        [ActionName("logout")]
+        public HttpResponseMessage PutLogoutUser()
+        {
+            var dbContext = new RecipesContext();
+            using (dbContext)
+            {
+                var user =  CheckSession(dbContext);
+                if (user != null)
+                {
+                    user.SessionKey = null;
+                    dbContext.SaveChanges();
+                }
+
+                var response = this.Request.CreateResponse(HttpStatusCode.OK);
+                return response;
+            }
+        }
+
         private string GenerateSessionKey(int userId)
         {
             StringBuilder sessionKeyBuilder = new StringBuilder(SessionKeyLength);
@@ -85,14 +147,6 @@ namespace Recipies.Controllers
             }
 
             return sessionKeyBuilder.ToString();
-        }
-
-        private void ValidateSessionKey(string sessionKey)
-        {
-            if (sessionKey == null || sessionKey.Length != SessionKeyLength)
-            {
-                throw new ArgumentOutOfRangeException("Invalid session");
-            }
         }
 
         private void ValidateAuthCode(string authCode)
