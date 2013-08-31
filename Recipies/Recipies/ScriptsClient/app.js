@@ -10,29 +10,31 @@ require.config({
         "class": "libs/class",
         cryptoJs: "libs/sha1",
         underscore: "libs/underscore",
-        kendoWeb: "libs/kendo.web.min"
+        kendoWeb: "libs/kendo.web.min",
+        persisters: "app/data"
 
     }
 });
 
-require(["jquery", "kendoWeb", "app/view-models", "app/views"], function ($) {
+require(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb"], function ($, viewModels, views, persisters) {
 
-    var layout = new kendo.Layout('#content');
+    var layout = new kendo.Layout('<div id="content"></div>');
+    var navLayout = new kendo.Layout('<nav id="main-nav"></nav>');
     var router = new kendo.Router();
     var viewModelFactory = viewModels.get();
     var viewFactory = views.get("ScriptsClient/partials/");
     router.route("/", function () {
-            var homeViewHtml = "";
-            viewFactory.mainNavView()
-				.then(function (viewHtml) {
-				    homeViewHtml = viewHtml;
-				    return viewModelFactory.buildCategoriesViewModel();
-				})
-				.then(function (vm) {
-				    $("#main-nav").append(homeViewHtml);
-				    var view = new kendo.View("main-nav-view-template", { model: vm });
-				    layout.showIn("#main-nav", view);
-				});
+          
+        viewFactory.mainNavView()
+		.then(function (viewHtml) {
+			var vm = viewModelFactory.buildCategoriesViewModel();
+			var view = new kendo.View(viewHtml, {model : vm});
+			navLayout.showIn("#main-nav", view);
+			console.log();
+			$("#menu").kendoMenu();
+		}, function (err) {
+			console.log();
+		});
     });
 
     router.route("/auth", function () {
@@ -48,7 +50,8 @@ require(["jquery", "kendoWeb", "app/view-models", "app/views"], function ($) {
     });
 
     $(function () {
-        layout.render($("#wrapper"));
+        layout.render($("#app"));
+        navLayout.render($("#wrapper > header"));
         router.start("/");
     });
 });

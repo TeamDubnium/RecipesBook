@@ -1,22 +1,24 @@
-﻿<script type="text/x-kendo-template" id="main-nav-view-template"> 
-    <ul>
-        <li>
+﻿<ul id="menu">
+    <li id="categories-sub-menu">
         <a href="#">Recipies</a>
-	        <ul>
-		        # for (var i = 0; i< categories.length; i++){ #
-			        <li>#: categories[i].name #
-			        </li>
-		        # }	#
-	        </ul>
-        </li>
-     <li>
-     <a href="#">Home</a>
+        <ul data-template="main-nav-view-template" data-bind ="source: categories">
+
+        </ul>
     </li>
     <li>
-     <a href="#">Login</a>
+        <a href="#">Home</a>
     </li>
     <li>
-     <a href="#">Add new recipe</a>
+        <a href="#">Login</a>
     </li>
-    </ul>
+    <li>
+        <a href="#">Add new recipe</a>
+    </li>
+</ul>
+
+
+<script type="text/x-kendo-template" id="main-nav-view-template">
+    <li>
+        <span data-bind="text: title"></span>
+    </li>
 </script>
