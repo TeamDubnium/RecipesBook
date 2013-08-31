@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -6,13 +7,12 @@ using System.Web;
 
 namespace Recipies.Models
 {
-    [DataContract]
     public class LoggedUserModel
     {
-        [DataMember(Name = "username")]
+        [JsonProperty("username")]
         public string Username { get; set; }
 
-        [DataMember(Name = "sessionKey")]
+        [JsonProperty("sessionKey")]
         public string SessionKey { get; set; }
     }
 }

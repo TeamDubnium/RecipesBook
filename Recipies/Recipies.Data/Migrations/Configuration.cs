@@ -59,7 +59,7 @@ namespace Recipies.Data.Migrations
             Recipe[] recipies = new Recipe[]
             {
                 //new Recipe { Title = "TestUser", Category = categories[0], Creator = users[0], Content = "bake for 5 mins", Products = new Product[] { products[0], products[1] }, Fans = new User[] { users[1], users[2] } },
-                new Recipe { Title = "Absolutely new Recipe", Category = categories[1], Creator = users[1], Content = "bake for 1 hour", Products = new Product[] { products[0] }, Fans = new User[] { users[0], users[2] } },
+                new Recipe { Title = "Absolutely new Recipe", Category = categories[1], Creator = users[1], Content = "bake for 1 hour", Products = new Product[] { products[0] }, Fans = new User[] { users[0], users[2] } , PublishDate = DateTime.Now },
             };
 
             for (int i = 0; i < categories.Length; i++)

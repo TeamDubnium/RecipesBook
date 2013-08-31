@@ -10,6 +10,36 @@ namespace Recipies
         public static void Register(HttpConfiguration config)
         {
             config.Routes.MapHttpRoute(
+                name: "DeleteUsersApi",
+                routeTemplate: "api/users/{id}/delete",
+                defaults: new
+                {
+                    controller = "users",
+                    action = "delete"
+                }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "PromoteUsersApi",
+                routeTemplate: "api/users/{id}/promote",
+                defaults: new
+                {
+                    controller = "users",
+                    action = "promote"
+                }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "UpdateUsersApi",
+                routeTemplate: "api/users/{id}/update",
+                defaults: new
+                {
+                    controller = "users",
+                    action = "update"
+                }
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "UsersApi",
                 routeTemplate: "api/users/{action}",
                 defaults: new

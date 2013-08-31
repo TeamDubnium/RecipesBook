@@ -52,6 +52,7 @@ namespace Recipies.Controllers
                     {
                         Username = model.Username.ToLower(),
                         AuthCode = model.AuthCode,
+                        Role = Role.Client
                     };
 
                     dbContext.Users.Add(user);
@@ -134,6 +135,104 @@ namespace Recipies.Controllers
                 var response = this.Request.CreateResponse(HttpStatusCode.OK);
                 return response;
             }
+        }
+
+        [HttpPut]
+        [ActionName("promote")]
+        public HttpResponseMessage PromoteUser(int id)
+        {
+            var dbContext = new RecipesContext();
+            using (dbContext)
+            {
+                var user = CheckSession(dbContext);
+                if (user == null || user.Role != Role.Admin)
+                {
+                    throw new InvalidOperationException("Only an authorized admin can promote users.");
+                }
+
+                var userToPromote = dbContext.Users.FirstOrDefault(u => u.UserId == id);
+
+                if (userToPromote != null)
+                {
+                    userToPromote.Role = Role.Admin;
+                    dbContext.SaveChanges();
+                }
+
+                var response = this.Request.CreateResponse(HttpStatusCode.OK);
+                return response;
+            }
+        }
+
+        [HttpPut]
+        [ActionName("delete")]
+        public HttpResponseMessage DeleteUser(int id)
+        {
+            var dbContext = new RecipesContext();
+            using (dbContext)
+            {
+                var user = CheckSession(dbContext);
+                if (user == null || user.Role != Role.Admin)
+                {
+                    throw new InvalidOperationException("Only an authorized admin can delete users.");
+                }
+
+                var userToDelete = dbContext.Users.FirstOrDefault(u => u.UserId == id);
+
+                if (userToDelete != null)
+                {
+                    dbContext.Users.Remove(userToDelete);
+                    dbContext.SaveChanges();
+                }
+
+                var response = this.Request.CreateResponse(HttpStatusCode.OK);
+                return response;
+            }
+        }
+
+        [HttpPut]
+        [ActionName("update")]
+        public HttpResponseMessage UpdateUser(int id, UserModel model)
+        {
+            var dbContext = new RecipesContext();
+            using (dbContext)
+            {
+                var user = CheckSession(dbContext);
+                if (user == null || user.Role != Role.Admin)
+                {
+                    throw new InvalidOperationException("Only an authorized admin can delete users.");
+                }
+
+                var userToUpdate = dbContext.Users.FirstOrDefault(u => u.UserId == id);
+
+                if (userToUpdate != null)
+                {
+                    if (model.AuthCode != null)
+                    {
+                        ValidateAuthCode(model.AuthCode);
+                        userToUpdate.AuthCode = model.AuthCode;
+                        dbContext.SaveChanges(); 
+                    }
+                }
+
+                var response = this.Request.CreateResponse(HttpStatusCode.OK);
+                return response;
+            }
+        }
+
+        [HttpGet]
+        [ActionName("get")]
+        public IQueryable<UserInfoModel> GetAll() 
+        {
+            var dbContext = new RecipesContext();
+            var user = CheckSession(dbContext);
+            if (user == null || user.Role != Role.Admin)
+            {
+                throw new InvalidOperationException("Only an authorized admin can view users.");
+            }
+
+            var users = dbContext.Users.Select(UserInfoModel.FromUser);
+            return users;
+            
         }
 
         private string GenerateSessionKey(int userId)
