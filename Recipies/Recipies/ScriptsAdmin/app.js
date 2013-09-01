@@ -42,6 +42,22 @@
                         templateUrl: "ScriptsAdmin/partials/single-user-view.html",
                         controller: SingleUserController
                     })
+                    .when("/categories", {
+                        templateUrl: "ScriptsAdmin/partials/all-categories-view.html",
+                        controller: CategoryController
+                    })
+                    .when("/categories/:id", {
+                        templateUrl: "ScriptsAdmin/partials/single-category-view.html",
+                        controller: SingleCategoryController
+                    })
+                    .when("/recipes", {
+                        templateUrl: "ScriptsAdmin/partials/all-recipes-view.html",
+                        controller: RecipeController
+                    })
+                     .when("/recipes/:id", {
+                         templateUrl: "ScriptsAdmin/partials/single-recipe-view.html",
+                         controller: SingleRecipeController
+                     })
                     .otherwise({ redirectTo: "/" });
             }]);
 

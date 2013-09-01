@@ -36,6 +36,7 @@ namespace Recipies.Controllers
         }
 
         [HttpGet]
+        [ActionName("get")]
         public HttpResponseMessage GetById(int id)
         {
             var responseMsg = this.PerformOperationAndHandleExceptions(() =>

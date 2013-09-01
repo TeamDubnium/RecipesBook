@@ -122,6 +122,81 @@
         
     }
 
+    function CategoryController($scope, $http, $routeParams) {
+        var self = this;
+        this.persister = persister.get($http, "/api");
+        this.persister.category.getAll(function (categories) {
+            $scope.categories = categories;
+        }, function () {
+            alert("Cannot get categories");
+        });
+    }
+    
+    function SingleCategoryController($scope, $http, $routeParams) {
+        var self = this;
+        this.persister = persister.get($http, "/api");
+        var id = $routeParams["id"];
+
+        this.persister.category.getAll(function (categories) {
+            $scope.category = _.first(_.filter(categories, function (c) {
+                return c.id == id;
+            }));
+
+            if ($scope.category == null) {
+                document.location = "#/404";
+            }
+
+            $scope.deleteCategory = function () {
+               
+                self.persister.category.deleteCategory(id, function () {
+                    $scope.message = "Category Deleted";
+                }, function () {
+                    $scope.message = "Cannot Delete Category";
+                });
+            }
+
+        }, function () {
+            alert("Cannot get Recipe");
+        });
+    }
+
+    function RecipeController($scope, $http, $routeParams) {
+        var self = this;
+        this.persister = persister.get($http, "/api");
+        this.persister.recipe.getAll(function (recipes) {
+            $scope.recipes = recipes;
+        }, function () {
+            alert("Cannot get recipes");
+        });
+    }
+
+    function SingleRecipeController($scope, $http, $routeParams) {
+        var self = this;
+        this.persister = persister.get($http, "/api");
+
+        var id = $routeParams["id"];
+
+        this.persister.recipe.getWithId(id, function (recipe) {
+            $scope.recipe = recipe;
+
+            if ($scope.recipe == null) {
+                document.location = "#/404";
+            }
+
+            $scope.deleteRecipe = function () {
+
+                self.persister.category.deleteCategory(id, function () {
+                    $scope.message = "Category Deleted";
+                }, function () {
+                    $scope.message = "Cannot Delete Category";
+                });
+            }
+
+        }, function () {
+            alert("Cannot get Category");
+        });
+    }
+
 //   return {
 //       HomeController: HomeController,
 //       LoginController: LoginController

@@ -23,6 +23,8 @@ window.persister = (function () {
             this.rootUrl = rootUrl;
             this.requester = requester;
             this.user = new UserPersister(this.requester, this.rootUrl);
+            this.category = new CategoryPersister(this.requester, this.rootUrl);
+            this.recipe = new RecipePersister(this.requester, this.rootUrl);
         },
         isUserLoggedIn: function () {
             var isLoggedIn = username != null && sessionKey != null
@@ -135,7 +137,76 @@ window.persister = (function () {
                 }
             };
 
-            this.requester.put(url, user, config)
+            this.requester.put(url, {}, config)
+               .success(success)
+               .error(error);
+        },
+    });
+
+
+    var CategoryPersister = Class.create({
+        init: function (requester, rootUrl) {
+            this.rootUrl = rootUrl + "/categories";
+            this.requester = requester;
+        },
+        getAll: function (success, error) {
+            var url = this.rootUrl;
+
+            this.requester.get(url)
+               .success(success)
+               .error(error);
+        },
+        getWithId: function (id, success, error) {
+            var url = this.rootUrl + "/" + id;
+
+            this.requester.get(url)
+               .success(success)
+               .error(error);
+        },
+        deleteCategory: function (id, success, error) {
+            var url = this.rootUrl + "/" + id + "/delete";
+
+            var config = {
+                headers: {
+                    "X-sessionKey": sessionKey
+                }
+            };
+
+            this.requester.put(url, {}, config)
+               .success(success)
+               .error(error);
+        },
+    });
+
+    var RecipePersister = Class.create({
+        init: function (requester, rootUrl) {
+            this.rootUrl = rootUrl + "/recipes";
+            this.requester = requester;
+        },
+        getAll: function (success, error) {
+            var url = this.rootUrl;
+
+            this.requester.get(url)
+               .success(success)
+               .error(error);
+        },
+        getWithId: function (id, success, error) {
+            var url = this.rootUrl +"/get/"+id;
+
+            this.requester.get(url)
+               .success(success)
+               .error(error);
+        },
+        deleteRecipe: function (id, success, error) {
+            var url = this.rootUrl + "/delete/" + id;
+
+            var config = {
+                headers: {
+                    "X-sessionKey": sessionKey
+                }
+            };
+
+            this.requester.put(url, {}, config)
                .success(success)
                .error(error);
         },
