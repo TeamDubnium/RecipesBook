@@ -355,6 +355,7 @@
     <Content Include="ScriptsAdmin\libs\require.js" />
     <Content Include="ScriptsAdmin\libs\sha1.js" />
     <Content Include="ScriptsAdmin\libs\underscore.js" />
+    <Content Include="ScriptsAdmin\partials\all-users-view.html" />
     <Content Include="ScriptsAdmin\partials\login-form.html" />
     <Content Include="ScriptsAdmin\partials\main-nav-view.html" />
     <Content Include="ScriptsAdmin\_references.js" />

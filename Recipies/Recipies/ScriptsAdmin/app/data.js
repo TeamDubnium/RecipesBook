@@ -52,21 +52,21 @@ window.persister = (function () {
                 })
                 .error(error);
         },
-        register: function (user, success, error) {
-            var url = this.rootUrl + "/register";
-            var userData = {
-                username: user.username,
-                authCode: CryptoJS.SHA1(user.username + user.password).toString()
-            };
+        //register: function (user, success, error) {
+        //    var url = this.rootUrl + "/register";
+        //    var userData = {
+        //        username: user.username,
+        //        authCode: CryptoJS.SHA1(user.username + user.password).toString()
+        //    };
 
-            this.requester.post(url, userData)
-                .success(function (data) {
-                    saveUserData(data);
-                    success(data);
-                })
-                .error(error);
+        //    this.requester.post(url, userData)
+        //        .success(function (data) {
+        //            saveUserData(data);
+        //            success(data);
+        //        })
+        //        .error(error);
 
-        },
+        //},
         logout: function (success, error) {
             var url = this.rootUrl + "/logout";
 
@@ -77,6 +77,22 @@ window.persister = (function () {
             };
 
             this.requester.put(url, {}, config)
+               .success(function () {
+                   clearUserData();
+                   success();
+               })
+               .error(error);
+        },
+        getAll: function (success, error) {
+            var url = this.rootUrl + "/get";
+
+            var config = {
+                headers: {
+                    "X-sessionKey": sessionKey
+                }
+            };
+
+            this.requester.get(url, config)
                .success(function () {
                    clearUserData();
                    success();

@@ -31,6 +31,10 @@
                         templateUrl: "ScriptsAdmin/partials/login-form.html",
                         controller: LoginController
                     })
+                    .when("/users", {
+                        templateUrl: "ScriptsAdmin/partials/all-users-view.html",
+                        controller: UserController
+                    })
                     .otherwise({ redirectTo: "/" });
             }]);
 

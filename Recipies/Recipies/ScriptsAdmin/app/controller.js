@@ -53,6 +53,16 @@
 
     };
 
+    function UserController($scope, $http, $routeParams) {
+        var self = this;
+        this.persister = persister.get($http, "/api");
+        this.persister.user.getAll(function (users) {
+            $scope.users = users;
+        }, function () {
+            alert("Cannot get users");
+        });
+    }
+
 //   return {
 //       HomeController: HomeController,
 //       LoginController: LoginController

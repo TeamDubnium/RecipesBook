@@ -1,17 +1,15 @@
 ﻿<ul id="menu">
-    <li id="categories-sub-menu">
-        <a href="#">Recipies</a>
-        <ul id="main-nav-view-template">
-             <li ng-repeat="category in categories">
-                <span>{{category.title}}</span>
-            </li>
-        </ul>
-    </li>
     <li>
         <a href="#/">Home</a>
     </li>
+     <li>
+         <a href="#">Recipies</a>
+    </li>
     <li>
-        <a ng-click="logoutUser()">Logout</a>
+        <a href="#/" ng-click="logoutUser()">Logout</a>
+    </li>
+    <li>
+        <a href="#/users">Users</a>
     </li>
     <li>
         <a href="#">Add new recipe</a>
