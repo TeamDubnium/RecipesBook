@@ -95,5 +95,34 @@ namespace Recipies.Controllers
 
             return responseMsg;
         }
+
+        [HttpPut]
+        [ActionName("like")]
+        public HttpResponseMessage Like(int id)
+        {
+            var responseMsg = this.PerformOperationAndHandleExceptions(() =>
+            {
+                var context = new RecipesContext();
+
+                var user = GetCurrentUser(context);
+
+                var recipe = context.Recipes.FirstOrDefault(x => x.Id == id);
+
+                if (recipe == null)
+                {
+                    throw new ArgumentException("No such recipe.");
+                }
+
+                if (!user.Favorites.Contains(recipe))
+                {
+                    user.Favorites.Add(recipe);
+                    context.SaveChanges();
+                }
+                var response = this.Request.CreateResponse(HttpStatusCode.OK);
+                return response;
+            });
+
+            return responseMsg;
+        }
     }
 }
