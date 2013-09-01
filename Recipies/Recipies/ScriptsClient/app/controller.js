@@ -1,5 +1,5 @@
 ﻿/// <reference path="../libs/_references.js" />
-define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "class"], function ($, viewModels, views, persisters) {
+define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "class", "rsvp"], function ($, viewModels, views, persisters) {
     var Controller = Class.create({
         init: function () {
             this.layout = new kendo.Layout('<div id="content"></div>');
@@ -43,6 +43,29 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
 
         loadHomePage: function () {
 
+        },
+
+        loadAuthPage: function () {
+
+            var that = this;
+            
+           
+            var promise = new RSVP.Promise(function (resolve, reject) {
+                that.viewFactory.loginForm()
+               .then(function (loginFormHtml) {
+
+                   var vm = that.viewModelFactory.buildLoginFormVM(function () {
+                       console.log("callback");
+                       resolve("loged");
+                   })
+                   var view = new kendo.View(loginFormHtml, { model: vm });
+                   that.layout.showIn("#content", view);
+
+               }, function (err) {
+                   console.log(err);
+               });
+            });
+            return promise;
         },
       
 
