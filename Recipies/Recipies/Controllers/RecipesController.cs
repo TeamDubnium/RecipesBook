@@ -140,6 +140,33 @@ namespace Recipies.Controllers
             return responseMsg;
         }
 
+        [HttpGet]
+        [ActionName("favourites")]
+        public HttpResponseMessage Favourites()
+        {
+            var responseMsg = this.PerformOperationAndHandleExceptions(() =>
+            {
+                var context = new RecipesContext();
+
+                var user = GetCurrentUser(context);
+
+                var favourites = from favourite
+                                 in user.Favorites
+                                 select new RecipeModel()
+                                 {
+                                     CategoryName = favourite.Category.Title,
+                                     CreatorUser = favourite.Creator.Username,
+                                     PublishDate = favourite.PublishDate,
+                                     Rating = favourite.Fans.Count,
+                                     Title = favourite.Title
+                                 };
+                var response = this.Request.CreateResponse(HttpStatusCode.OK, favourites);
+                return response;
+            });
+
+            return responseMsg;
+        }
+
         [HttpPut]
         [ActionName("delete")]
         public HttpResponseMessage Delete(int id)

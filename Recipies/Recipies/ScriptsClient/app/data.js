@@ -108,6 +108,10 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
         all: function () {
             return httpRequester.getJSON(this.apiUrl);
         },
+        favourites: function () {
+            var url = this.apiUrl + "/favourites";
+            return httpRequester.getJSON(url);
+        },
     });
 
     var DataPersister = Class.create({
