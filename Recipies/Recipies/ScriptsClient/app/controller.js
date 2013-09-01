@@ -103,7 +103,7 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
 
         loadCreateRecipePage: function () {
 
-            
+
         },
 
 
@@ -112,7 +112,7 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
 
             this.viewFactory.recipesByCategoryView()
                 .then(function (viewHtml) {
-                    self.viewModelFactory.getRecipesByCategoryViewModel(categoryId).then(function(vm){
+                    self.viewModelFactory.getRecipesByCategoryViewModel(categoryId).then(function (vm) {
                         var view = new kendo.View(viewHtml, { model: vm });
 
                         self.layout.showIn("#content", view);
@@ -121,9 +121,27 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
 
                     }, function (err) {
                         console.log();
-                    });});
+                    });
+                });
         },
 
+        loadAllRecipes: function (categoryId) {
+            var self = this;
+
+            this.viewFactory.recipesByCategoryView()
+                .then(function (viewHtml) {
+                    self.viewModelFactory.getAllRecipesViewModel(categoryId).then(function (vm) {
+                        var view = new kendo.View(viewHtml, { model: vm });
+
+                        self.layout.showIn("#content", view);
+
+                        console.log(res);
+
+                    }, function (err) {
+                        console.log();
+                    });
+                });
+        },
 
     });
 

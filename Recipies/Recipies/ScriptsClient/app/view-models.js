@@ -104,6 +104,25 @@ define(["jquery", "class", ], function ($) {
             return promise;
         },
 
+        getAllRecipesViewModel: function (id) {
+            var promise = this.persister.recipes.all()
+                .then(function (recipes) {
+                    var viewModel = {
+                        recipes: recipes
+                    };
+
+                    var categoriesViewModel = new kendo.observable(
+                        viewModel
+                    );
+                    return categoriesViewModel;
+
+                }, function (err) {
+                    console.log(err)
+                });
+
+            return promise;
+        },
+
         buildCreateRecipeFormVM: function (successCallback) {
             var self = this;
             var viewModel = new kendo.observable({

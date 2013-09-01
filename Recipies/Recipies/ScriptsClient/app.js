@@ -71,7 +71,7 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
 
 
     router.route("/allRecipes", function () {
-        alert("all recipes");
+        controllerFactory.loadAllRecipes();
 
     });
 
