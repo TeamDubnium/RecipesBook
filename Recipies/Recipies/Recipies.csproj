@@ -355,8 +355,11 @@
     <Content Include="ScriptsAdmin\libs\require.js" />
     <Content Include="ScriptsAdmin\libs\sha1.js" />
     <Content Include="ScriptsAdmin\libs\underscore.js" />
+    <Content Include="ScriptsAdmin\partials\404.html" />
+    <Content Include="ScriptsAdmin\partials\all-users-view.html" />
     <Content Include="ScriptsAdmin\partials\login-form.html" />
     <Content Include="ScriptsAdmin\partials\main-nav-view.html" />
+    <Content Include="ScriptsAdmin\partials\single-user-view.html" />
     <Content Include="ScriptsAdmin\_references.js" />
     <Content Include="ScriptsClient\app\controller.js" />
     <Content Include="ScriptsClient\libs\http-requester.js" />
@@ -376,6 +379,7 @@
     <Content Include="ScriptsClient\libs\rsvp.min.js" />
     <Content Include="ScriptsClient\libs\sha1.js" />
     <Content Include="ScriptsClient\libs\_references.js" />
+    <Content Include="ScriptsClient\partials\create-recipe.html" />
     <Content Include="ScriptsClient\partials\home-page.html" />
     <Content Include="ScriptsClient\partials\login-form.html" />
     <Content Include="ScriptsClient\partials\main-nav-view.html" />

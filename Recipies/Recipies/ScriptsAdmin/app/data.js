@@ -52,21 +52,21 @@ window.persister = (function () {
                 })
                 .error(error);
         },
-        register: function (user, success, error) {
-            var url = this.rootUrl + "/register";
-            var userData = {
-                username: user.username,
-                authCode: CryptoJS.SHA1(user.username + user.password).toString()
-            };
+        //register: function (user, success, error) {
+        //    var url = this.rootUrl + "/register";
+        //    var userData = {
+        //        username: user.username,
+        //        authCode: CryptoJS.SHA1(user.username + user.password).toString()
+        //    };
 
-            this.requester.post(url, userData)
-                .success(function (data) {
-                    saveUserData(data);
-                    success(data);
-                })
-                .error(error);
+        //    this.requester.post(url, userData)
+        //        .success(function (data) {
+        //            saveUserData(data);
+        //            success(data);
+        //        })
+        //        .error(error);
 
-        },
+        //},
         logout: function (success, error) {
             var url = this.rootUrl + "/logout";
 
@@ -82,7 +82,63 @@ window.persister = (function () {
                    success();
                })
                .error(error);
-        }
+        },
+        getAll: function (success, error) {
+            var url = this.rootUrl + "/get";
+
+            var config = {
+                headers: {
+                    "X-sessionKey": sessionKey
+                }
+            };
+
+            this.requester.get(url, config)
+               .success(success)
+               .error(error);
+        },
+        promoteToAdmin: function (user, success, error) {
+            var url = this.rootUrl + "/" + user.id + "/promote";
+
+            var config = {
+                headers: {
+                    "X-sessionKey": sessionKey
+                }
+            };
+
+            this.requester.put(url, user, config)
+               .success(success)
+               .error(error);
+        },
+        changePassword: function (user, success, error) {
+            var url = this.rootUrl + "/" + user.id + "/update";
+            var userData = {
+                username: user.username,
+                authCode: CryptoJS.SHA1(user.username + user.password).toString()
+            };
+
+            var config = {
+                headers: {
+                    "X-sessionKey": sessionKey
+                }
+            };
+
+            this.requester.put(url, userData, config)
+               .success(success)
+               .error(error);
+        },
+        deleteUser: function (user, success, error) {
+            var url = this.rootUrl + "/" + user.id + "/delete";
+
+            var config = {
+                headers: {
+                    "X-sessionKey": sessionKey
+                }
+            };
+
+            this.requester.put(url, user, config)
+               .success(success)
+               .error(error);
+        },
     });
 
     return {

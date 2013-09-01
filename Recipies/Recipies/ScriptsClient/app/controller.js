@@ -101,6 +101,12 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
             return this.persister.users.logout();
         },
 
+        loadCreateRecipePage: function () {
+
+            
+        },
+
+
         loadRecipesByCategoryPage: function (categoryId) {
             var self = this;
 

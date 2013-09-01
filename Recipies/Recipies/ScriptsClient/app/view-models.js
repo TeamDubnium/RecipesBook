@@ -86,17 +86,31 @@ define(["jquery", "class", ], function ($) {
             return viewModel;
         },
 
-        getRecipesByCategoryViewModel: function (id) {
-            return this.persister.categories.byId(id)
-			.then(function (recipes) {
-			    var recipesViewModel = new kendo.observable({
-			        recipes: recipes
-			    });
-			    return recipesViewModel;
-			}, function (err) {
-			    console.log();
-			});
-        },
+        buildCreateRecipeFormVM: function (successCallback) {
+            var self = this;
+            var viewModel = new kendo.observable({
+                title: "DonchoMinkov",
+                password: "Minkov",
+                message: "Common!",
+                createRecipe: function (e) {
+                    return self.persister.users
+						.login(this.get("username"), this.get("password"))
+							.then(function (name) {
+							    displayName = name;
+							    successCallback();
+							});
+                },
+                registerUser: function (e) {
+                    return self.persister.users
+						.register(this.get("username"), this.get("password"))
+							.then(function (name) {
+							    displayName = name;
+							    successCallback();
+							});
+                }
+            });
+            return viewModel;
+        }
     });
 
     return {

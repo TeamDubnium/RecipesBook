@@ -27,9 +27,20 @@
                         templateUrl: "ScriptsAdmin/partials/main-nav-view.html",
                         controller: HomeController
                     })
+                    .when("/404", {
+                        templateUrl: "ScriptsAdmin/partials/404.html"
+                    })
                     .when("/login", {
                         templateUrl: "ScriptsAdmin/partials/login-form.html",
                         controller: LoginController
+                    })
+                    .when("/users", {
+                        templateUrl: "ScriptsAdmin/partials/all-users-view.html",
+                        controller: UserController
+                    })
+                    .when("/users/:id", {
+                        templateUrl: "ScriptsAdmin/partials/single-user-view.html",
+                        controller: SingleUserController
                     })
                     .otherwise({ redirectTo: "/" });
             }]);
