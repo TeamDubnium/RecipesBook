@@ -1,6 +1,6 @@
 ﻿/// <reference path="../libs/_references.js" />
 
-define(["jquery", "httpRequester", "rsvp", "class"], function ($, httpRequester) {
+define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, httpRequester) {
 
     var CategoriesPersister = Class.create({
         init: function (apiUrl) {
@@ -20,9 +20,9 @@ define(["jquery", "httpRequester", "rsvp", "class"], function ($, httpRequester)
             var promise = new RSVP.Promise(function (resolve, reject) {
                 var user = {
                     username: username,
-                    authCode: CryptoJS.SHA1(password).toString()
+                    authCode: CryptoJS.SHA1(username + password).toString()
                 };
-                return postJSON(self.apiUrl + "login", user)
+                return httpRequester.postJSON(self.apiUrl + "/login", user)
 					.then(function (data) {
 					    this.sessionKey = data.sessionKey;
 					    debugger;
@@ -36,9 +36,9 @@ define(["jquery", "httpRequester", "rsvp", "class"], function ($, httpRequester)
             var promise = new RSVP.Promise(function (resolve, reject) {
                 var user = {
                     username: username,
-                    authCode: CryptoJS.SHA1(password).toString()
+                    authCode: CryptoJS.SHA1(username + password).toString()
                 };
-                return postJSON(self.apiUrl + "register", user)
+                return httpRequester.postJSON(self.apiUrl + "/register", user)
 					.then(function (data) {
 					    this.sessionKey = data.sessionKey;
 					    resolve(data.nickname);
