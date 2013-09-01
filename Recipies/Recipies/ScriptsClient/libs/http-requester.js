@@ -3,12 +3,13 @@
 /// <reference path="rsvp.min.js" />
 
 define(["jquery", "rsvp"], function ($) {
-	function getJSON(serviceUrl) {
+    function getJSON(serviceUrl, headers) {
 		var promise = new RSVP.Promise(function (resolve, reject) {
 			jQuery.ajax({
 				url: serviceUrl,
 				type: "GET",
 				dataType: "json",
+				headers: headers,
 				success: function (data) {
 					resolve(data);
 				},
@@ -20,13 +21,14 @@ define(["jquery", "rsvp"], function ($) {
 		return promise;
 	}
 
-	function postJSON(serviceUrl, data) {
+    function postJSON(serviceUrl, data, headers) {
 		var promise = new RSVP.Promise(function (resolve, reject) {
 			jQuery.ajax({
 				url: serviceUrl,
 				dataType: "json",
 				type: "POST",
 				contentType: "application/json",
+				headers: headers,
 				data: JSON.stringify(data),
 				success: function (data) {
 					resolve(data);
@@ -39,13 +41,14 @@ define(["jquery", "rsvp"], function ($) {
 		return promise;
 	}
 
-	function putJSON(serviceUrl, data) {
+    function putJSON(serviceUrl, data, headers) {
 	    var promise = new RSVP.Promise(function (resolve, reject) {
 	        jQuery.ajax({
 	            url: serviceUrl,
 	            dataType: "json",
 	            type: "PUT",
 	            contentType: "application/json",
+	            headers: headers,
 	            data: JSON.stringify(data),
 	            success: function (data) {
 	                resolve(data);

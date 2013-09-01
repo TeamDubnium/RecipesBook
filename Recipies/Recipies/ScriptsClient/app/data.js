@@ -45,9 +45,8 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
                 };
                 return httpRequester.postJSON(self.apiUrl + "/login", user)
 					.then(function (data) {
-					    this.sessionKey = data.sessionKey;
-					    debugger;
-					    resolve(data.displayName);
+					    saveSession(data);
+					    resolve(data);
 					});
             });
             return promise;
@@ -61,8 +60,25 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
                 };
                 return httpRequester.postJSON(self.apiUrl + "/register", user)
 					.then(function (data) {
-					    this.sessionKey = data.sessionKey;
-					    resolve(data.nickname);
+					    saveSession(data);
+					    resolve(data);
+					});
+            });
+            return promise;
+        },
+
+        logout: function (username, password) {
+            var self = this;
+            var promise = new RSVP.Promise(function (resolve, reject) {
+                var user = {
+                };
+
+                var header = { "X-sessionKey": sessionKey };
+
+                return httpRequester.putJSON(self.apiUrl + "/logout", user, header)
+					.then(function (data) {
+					    clearSession();
+					    resolve(data);
 					});
             });
             return promise;
@@ -72,8 +88,8 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
     var DataPersister = Class.create({
         init: function (apiUrl) {
             this.apiUrl = apiUrl;
-            this.categories = new CategoriesPersister(this.apiUrl + "categories");
-            this.users = new UsersPersister(this.apiUrl + "users");
+            this.categories = new CategoriesPersister(this.apiUrl + "/categories");
+            this.users = new UsersPersister(this.apiUrl + "/users");
         },
 
         isUserLoggedIn: function () {
