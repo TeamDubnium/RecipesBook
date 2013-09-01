@@ -27,6 +27,7 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
                             var view = new kendo.View(viewHtml, { model: vm });
                             that.navLayout.showIn("#main-nav", view);
                             console.log();
+                            // add li <a #/allRecipes>
                             $("#menu").kendoMenu();
                         }, function (err) {
                             console.log(err)
@@ -35,14 +36,31 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
                 }, function (err) {
                     console.log();
                 });
+
+                // add li logout
             }
             else {
-               // 
+                // 
+                // add li logout
             }
+
+
         },
 
         loadHomePage: function () {
 
+            var that = this;
+
+            this.viewFactory.homePageView()
+               .then(function (viewHtml) {
+                   var vm = that.viewModelFactory.buildHomeViewModel()
+                   
+                    var view = new kendo.View(viewHtml, { model: vm });
+                    that.layout.showIn("#content", view);
+
+               }, function (err) {
+                   console.log();
+               });
         },
 
         loadAuthPage: function () {
@@ -66,6 +84,11 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
                });
             });
             return promise;
+        },
+
+        loadRecipesByCategoryPage: function (categoryId) {
+            /// <summary></summary>
+            /// <param name="categoryId" type="Object"></param> grid
         },
       
 

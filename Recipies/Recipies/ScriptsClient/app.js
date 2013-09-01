@@ -26,6 +26,8 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
     router.route("/", function () {
           
         controllerFactory.loadNav();
+
+        controllerFactory.loadHomePage();
       
     });
 
@@ -33,7 +35,8 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
 
         controllerFactory.loadAuthPage()
             .then(function (data) {
-                router.navigate("/");
+                controllerFactory.loadNav();
+                history.back();
             }, function (err) {
                 console.log(err);
 
@@ -41,9 +44,14 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
            
     });
 
-    router.route("/categories:id", function (id) {
+    router.route("/categories/:id", function (id) {
         alert(id);
+        // redirect -> /recipe/:id
+    });
 
+      router.route("/recipe/:id", function (id) {
+        alert(id);
+        // detail view recipe
     });
 
     router.route("/addrecipe", function () {
@@ -51,6 +59,11 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
 
     });
 
+
+    router.route("/allRecipes", function () {
+        alert("create recipe");
+
+    });
 
     $(function () {
         controllerFactory.renderLayouts();

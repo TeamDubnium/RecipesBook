@@ -12,6 +12,33 @@ define(["jquery", "persisters", "class", ], function ($, persisters) {
             return displayName;
         },
 
+        buildHomeViewModel: function () {
+
+            var username = this.persister.getCurrentUsername();
+            var greeting = "";
+            if (!username) {
+               
+                greeting = "Hello stranger, have a nice time in our site.";
+
+            }
+            else {
+                greeting = "Hello " + username + ", we are glad to see you again";
+            }
+            
+            
+
+            var viewModel = {
+                greeting: greeting
+            };
+
+            var userViewModel = new kendo.observable(
+                viewModel
+            )
+            return userViewModel;
+
+        },
+
+
         buildCategoriesViewModel: function () {
     
 
