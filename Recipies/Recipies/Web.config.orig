@@ -10,7 +10,11 @@
   </configSections>
   <connectionStrings>
     <add name="RecipesBookDb" providerName="System.Data.SqlClient"
+<<<<<<< HEAD
+         connectionString="Server=ebca8f90-febc-407e-92f4-a22b0188783d.sqlserver.sequelizer.com;Database=dbebca8f90febc407e92f4a22b0188783d;User ID=udalvzdchpbkkctk;Password=Sk24bC8Wn8RAAAbjWGdo8YehhbEyrExgjuvp5yQtimpYnQLXK2KXcFy2fTU86HDP;" />
+=======
          connectionString="Server=e9b05cfd-883f-456a-902f-a22c0020f7c5.sqlserver.sequelizer.com;Database=dbe9b05cfd883f456a902fa22c0020f7c5;User ID=tvpnuiwsuzfqhkmj;Password=UXFph7HCLU7JciBnxtRXsPMqX6QKPkUhngj3AHvWqh4cvrQPB8p8PMefjpykq7VA;" />
+>>>>>>> 72f5de8630804902f98f2d60c8291f5a3a8fbda8
   </connectionStrings>
   <appSettings>
     <add key="webpages:Version" value="2.0.0.0" />

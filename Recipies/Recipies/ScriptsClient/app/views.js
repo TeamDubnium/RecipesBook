@@ -1,4 +1,5 @@
-﻿define(["jquery", "class", "rsvp"], function ($) {
+﻿/// <reference path="../libs/_references.js" />
+define(["jquery", "class", "rsvp"], function ($) {
     var Views = Class.create({
         init: function (rootPath) {
             this.root = rootPath;

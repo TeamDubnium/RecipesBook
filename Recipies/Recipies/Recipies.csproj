@@ -126,6 +126,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RecipesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -142,6 +144,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="admin.html" />
     <Content Include="Content\kendo\2013.2.716\Black\editor.png" />
     <Content Include="Content\kendo\2013.2.716\Black\imagebrowser.png" />
     <Content Include="Content\kendo\2013.2.716\Black\loading-image.gif" />
@@ -341,6 +344,22 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
+    <Content Include="ScriptsAdmin\app.js" />
+    <Content Include="ScriptsAdmin\app\controller.js" />
+    <Content Include="ScriptsAdmin\app\data.js" />
+    <Content Include="ScriptsAdmin\libs\angular-resource.js" />
+    <Content Include="ScriptsAdmin\libs\angular-scenario.js" />
+    <Content Include="ScriptsAdmin\libs\angular.js" />
+    <Content Include="ScriptsAdmin\libs\class.js" />
+    <Content Include="ScriptsAdmin\libs\jquery-2.0.3.js" />
+    <Content Include="ScriptsAdmin\libs\require.js" />
+    <Content Include="ScriptsAdmin\libs\sha1.js" />
+    <Content Include="ScriptsAdmin\libs\underscore.js" />
+    <Content Include="ScriptsAdmin\partials\login-form.html" />
+    <Content Include="ScriptsAdmin\partials\main-nav-view.html" />
+    <Content Include="ScriptsAdmin\_references.js" />
+    <Content Include="ScriptsClient\app\controller.js" />
+    <Content Include="ScriptsClient\libs\http-requester.js" />
     <Content Include="ScriptsClient\libs\jquery-2.0.3.min.map" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="ScriptsClient\app.js" />

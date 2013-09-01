@@ -23,13 +23,13 @@ namespace Recipies.Models
         public int Quantity { get; set; }
 
         [JsonIgnore]
-        public static Expression<Func<Product, ProductModel>> FromProductToProductModel
+        public static Expression<Func<Ingredient, ProductModel>> FromProductToProductModel
         {
             get
             {
                 return x => new ProductModel()
                 {
-                    Name = x.Name,
+                    Name = x.Product.Title,
                     Mesaurement =  x.Mesaurement,
                     Quantity = x.Quantity
                 };

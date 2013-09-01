@@ -8,9 +8,9 @@ namespace Recipies.Model
         public int Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string Title { get; set; }
 
-        public ICollection<Recipe> Recipes { get; set; }
+        public virtual ICollection<Recipe> Recipes { get; set; }
 
         public Category()
         {

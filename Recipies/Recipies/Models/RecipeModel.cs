@@ -22,7 +22,7 @@ namespace Recipies.Models
                     PublishDate = recipe.PublishDate,
                     CreatorUser = recipe.Creator.Username,
                     Rating = recipe.Fans.Count,
-                    CategoryName = recipe.Category.Name
+                    CategoryName = recipe.Category.Title
                 };
             }
         }

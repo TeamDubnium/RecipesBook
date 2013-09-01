@@ -8,12 +8,12 @@ namespace Recipies.Model
 {
     public class User
     {
+        private ICollection<Recipe> myRecipes;
+
+        private ICollection<Recipe> favorites;
 
         public int UserId { get; set; }
-
         
-        [StringLength(30, MinimumLength = 6, ErrorMessage =
-            "UserName must be between 6 and 30 characters long.")]
         [RegularExpression(@"^[a-zA-Z''-'''.''''_''\s]{1,40}$", ErrorMessage =
             "Numbers and special characters are not allowed in the name.")]
         [Required(ErrorMessage = "UserName is required.")]
@@ -30,15 +30,36 @@ namespace Recipies.Model
         public Role Role { get; set; }
 
         //[InverseProperty("Creator")]
-        public virtual ICollection<Recipe> MyRecipes { get; set; }
-
         //[InverseProperty("Fans")]
-        public virtual ICollection<Recipe> Favourites { get; set; }
+       
 
         public User()
         {
-            this.MyRecipes = new HashSet<Recipe>();
-            this.Favourites = new HashSet<Recipe>();
+            this.myRecipes = new HashSet<Recipe>();
+            this.favorites = new HashSet<Recipe>();
+        }
+        public virtual ICollection<Recipe> Favorites
+        {
+            get
+            {
+                return this.favorites;
+            }
+            set
+            {
+                this.favorites = value;
+            }
+        }
+
+        public virtual ICollection<Recipe> MyRecipes
+        {
+            get
+            {
+                return this.myRecipes;
+            }
+            set
+            {
+                this.myRecipes = value;
+            }
         }
     }
 }

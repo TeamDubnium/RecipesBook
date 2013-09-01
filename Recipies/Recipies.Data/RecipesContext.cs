@@ -18,6 +18,8 @@ namespace Recipies.Data
 
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<Ingredient> Ingredients { get; set; }
+
         public RecipesContext()
             : base("RecipesBookDb")
         {
@@ -33,7 +35,7 @@ namespace Recipies.Data
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<User>()
-                .HasMany(m => m.Favourites)
+                .HasMany(m => m.Favorites)
                 .WithMany(p => p.Fans)
                 .Map(a =>
                 {
