@@ -19,6 +19,15 @@ namespace Recipies
             );
 
             config.Routes.MapHttpRoute(
+                name: "RecipesSimpleApi",
+                routeTemplate: "api/recipes/{action}",
+                defaults: new
+                {
+                    controller = "recipes"
+                }
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "GetRecipesByCategoryApi",
                 routeTemplate: "api/categories/{id}/recipes",
                 defaults: new

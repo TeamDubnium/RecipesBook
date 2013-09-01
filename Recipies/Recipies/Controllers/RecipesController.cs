@@ -62,6 +62,7 @@ namespace Recipies.Controllers
         }
 
         [HttpPost]
+        [ActionName("add")]
         public HttpResponseMessage Add(RecipeDetails recipe)
         {
             var responseMsg = this.PerformOperationAndHandleExceptions(() =>
@@ -118,6 +119,39 @@ namespace Recipies.Controllers
                     user.Favorites.Add(recipe);
                     context.SaveChanges();
                 }
+                var response = this.Request.CreateResponse(HttpStatusCode.OK);
+                return response;
+            });
+
+            return responseMsg;
+        }
+
+        [HttpPut]
+        [ActionName("delete")]
+        public HttpResponseMessage Delete(int id)
+        {
+            var responseMsg = this.PerformOperationAndHandleExceptions(() =>
+            {
+                var context = new RecipesContext();
+
+                var user = GetCurrentUser(context);
+
+                var recipe = context.Recipes.FirstOrDefault(x => x.Id == id);
+
+                if (recipe == null)
+                {
+                    throw new ArgumentException("No such recipe.");
+                }
+
+                if (recipe.Creator.UserId != user.UserId && user.Role != Role.Admin)
+                {
+                    throw new Exception("This user doesn't have the permissions to delete this recipe.");
+                }
+
+                context.Recipes.Remove(recipe);
+                user.MyRecipes.Remove(recipe);
+
+                context.SaveChanges();
                 var response = this.Request.CreateResponse(HttpStatusCode.OK);
                 return response;
             });
