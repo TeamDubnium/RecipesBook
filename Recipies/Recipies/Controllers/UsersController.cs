@@ -125,7 +125,7 @@ namespace Recipies.Controllers
             var dbContext = new RecipesContext();
             using (dbContext)
             {
-                var user =  CheckSession(dbContext);
+                var user =  GetCurrentUser(dbContext);
                 if (user != null)
                 {
                     user.SessionKey = null;
@@ -144,7 +144,7 @@ namespace Recipies.Controllers
             var dbContext = new RecipesContext();
             using (dbContext)
             {
-                var user = CheckSession(dbContext);
+                var user = GetCurrentUser(dbContext);
                 if (user == null || user.Role != Role.Admin)
                 {
                     throw new InvalidOperationException("Only an authorized admin can promote users.");
@@ -170,7 +170,7 @@ namespace Recipies.Controllers
             var dbContext = new RecipesContext();
             using (dbContext)
             {
-                var user = CheckSession(dbContext);
+                var user = GetCurrentUser(dbContext);
                 if (user == null || user.Role != Role.Admin)
                 {
                     throw new InvalidOperationException("Only an authorized admin can delete users.");
@@ -196,7 +196,7 @@ namespace Recipies.Controllers
             var dbContext = new RecipesContext();
             using (dbContext)
             {
-                var user = CheckSession(dbContext);
+                var user = GetCurrentUser(dbContext);
                 if (user == null || user.Role != Role.Admin)
                 {
                     throw new InvalidOperationException("Only an authorized admin can delete users.");
@@ -224,7 +224,7 @@ namespace Recipies.Controllers
         public IQueryable<UserInfoModel> GetAll() 
         {
             var dbContext = new RecipesContext();
-            var user = CheckSession(dbContext);
+            var user = GetCurrentUser(dbContext);
             if (user == null || user.Role != Role.Admin)
             {
                 throw new InvalidOperationException("Only an authorized admin can view users.");

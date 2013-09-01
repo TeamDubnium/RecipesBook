@@ -30,19 +30,31 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
     });
 
     router.route("/auth", function () {
-        viewFactory.loginForm()
-			.then(function (loginFormHtml) {
-			    var vm = viewModelFactory.buildLoginFormVM(function () {
-			        //debugger;
-			        router.navigate("/");
-			    });
-			    var view = new kendo.View(loginFormHtml, { model: vm });
-			    layout.showIn("#content", view);
-			});
+
+        controllerFactory.loadAuthPage()
+            .then(function (data) {
+                router.navigate("/");
+            }, function (err) {
+                console.log(err);
+
+            });
+           
     });
+
+    router.route("/categories:id", function (id) {
+        alert(id);
+
+    });
+
+    router.route("/addrecipe", function () {
+        alert("create recipe");
+
+    });
+
 
     $(function () {
         controllerFactory.renderLayouts();
-        router.start("/");
+        router.start();
+        router.navigate("/");
     });
 });

@@ -24,10 +24,11 @@ namespace Recipies.Controllers
             }
         }
 
-        protected User CheckSession(RecipesContext context)
+        protected User GetCurrentUser(RecipesContext context)
         {
             var sessionKey = this.Request.Headers.GetValues("X-sessionKey").FirstOrDefault();
 
+            //sessionKey = sessionKey.Substring("sessionKey=".Length);
             if (sessionKey == null)
             {
                 throw new InvalidOperationException("No session key found.");
