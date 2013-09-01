@@ -93,12 +93,52 @@ window.persister = (function () {
             };
 
             this.requester.get(url, config)
-               .success(function () {
-                   clearUserData();
-                   success();
-               })
+               .success(success)
                .error(error);
-        }
+        },
+        promoteToAdmin: function (user, success, error) {
+            var url = this.rootUrl + "/" + user.id + "/promote";
+
+            var config = {
+                headers: {
+                    "X-sessionKey": sessionKey
+                }
+            };
+
+            this.requester.put(url, user, config)
+               .success(success)
+               .error(error);
+        },
+        changePassword: function (user, success, error) {
+            var url = this.rootUrl + "/" + user.id + "/update";
+            var userData = {
+                username: user.username,
+                authCode: CryptoJS.SHA1(user.username + user.password).toString()
+            };
+
+            var config = {
+                headers: {
+                    "X-sessionKey": sessionKey
+                }
+            };
+
+            this.requester.put(url, userData, config)
+               .success(success)
+               .error(error);
+        },
+        deleteUser: function (user, success, error) {
+            var url = this.rootUrl + "/" + user.id + "/delete";
+
+            var config = {
+                headers: {
+                    "X-sessionKey": sessionKey
+                }
+            };
+
+            this.requester.put(url, user, config)
+               .success(success)
+               .error(error);
+        },
     });
 
     return {
