@@ -112,13 +112,17 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
 
             this.viewFactory.recipesByCategoryView()
                 .then(function (viewHtml) {
-                    var vm = self.viewModelFactory.getRecipesByCategoryViewModel(categoryId);
-                    var view = new kendo.View(viewHtml, { model: vm });
+                    self.viewModelFactory.getRecipesByCategoryViewModel(categoryId)
+                        .then(function (vm) {
 
-                    self.layout.showIn("#content", view);
+                            var view = new kendo.View(viewHtml, { model: vm });
 
-                    console.log(res);
+                            self.layout.showIn("#content", view);
 
+                        }, function (err) {
+                            console.log(err);
+                        });
+                
                 }, function (err) {
                     console.log();
                 });
