@@ -42,12 +42,12 @@ namespace Recipies.Models
                 {
                     Id = x.Id,
                     Title = x.Title,
-                    CategoryName = x.Category.Name,
+                    CategoryName = x.Category.Title,
                     Content = x.Content,
-                   PublishDate = x.PublishDate,
-                   CreatorUser = x.Creator.Username,
-                   Rating = x.Fans.Count,
-                   Products = x.Products.Select(p => p.Name)
+                    PublishDate = x.PublishDate,
+                    CreatorUser = x.Creator.Username,
+                    Rating = x.Fans.Count,
+                    Products = x.Products.Select(p => p.Product.Title).Distinct()
                 };
             }
         }

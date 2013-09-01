@@ -1,5 +1,5 @@
 ﻿/// <reference path="data.js" />
-/// <reference path="../libs/kendo.web.min.js" />
+
 define(["jquery", "persisters", "class", ], function ($, persisters) {
     var displayName = "";
     var ViewModels = Class.create({
@@ -7,30 +7,34 @@ define(["jquery", "persisters", "class", ], function ($, persisters) {
             this.persister = persister;
             return this;
         },
+
         currentUser: function () {
             return displayName;
         },
+
         buildCategoriesViewModel: function () {
-            var categories = [
-                { title: "Dinner" },
-                { title: "Main dish" },
-                { title: "Side dish" },
-                { title: "Snack" },
+    
 
-            ]
-            console.log(categories.length);
-            //var carsDataSource = new kendo.data.DataSource(categories);
+            var promise = this.persister.categories.all()
+                .then(function (categoriesAll) {
+                    console.log(categoriesAll);
 
-            var viewModel = {
-                categories: categories
-            };
+                    var viewModel = {
+                        categories: categoriesAll
+                    };
 
-            var categoriesViewModel = new kendo.observable(
-                viewModel
-            )
-            return categoriesViewModel;
+                    var categoriesViewModel = new kendo.observable(
+                        viewModel
+                    )
+                    return categoriesViewModel;
 
+                }, function (err) {
+                    console.log(err)
+                });
+
+            return promise;
         },
+
         buildLoginFormVM: function (successCallback) {
             var self = this;
             var viewModel = new kendo.observable({
@@ -64,6 +68,3 @@ define(["jquery", "persisters", "class", ], function ($, persisters) {
         }
     }
 });
-window.viewModels = (function () {
-	
-}());

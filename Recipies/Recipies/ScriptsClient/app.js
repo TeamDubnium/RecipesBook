@@ -16,25 +16,17 @@ require.config({
     }
 });
 
-require(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb"], function ($, viewModels, views, persisters) {
+require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
 
-    var layout = new kendo.Layout('<div id="content"></div>');
-    var navLayout = new kendo.Layout('<nav id="main-nav"></nav>');
+   
     var router = new kendo.Router();
-    var viewModelFactory = viewModels.get();
-    var viewFactory = views.get("ScriptsClient/partials/");
+   
+    var controllerFactory = controller.get();
+
     router.route("/", function () {
           
-        viewFactory.mainNavView()
-		.then(function (viewHtml) {
-			var vm = viewModelFactory.buildCategoriesViewModel();
-			var view = new kendo.View(viewHtml, {model : vm});
-			navLayout.showIn("#main-nav", view);
-			console.log();
-			$("#menu").kendoMenu();
-		}, function (err) {
-			console.log();
-		});
+        controllerFactory.loadNav();
+      
     });
 
     router.route("/auth", function () {
@@ -50,8 +42,7 @@ require(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb"], fu
     });
 
     $(function () {
-        layout.render($("#app"));
-        navLayout.render($("#wrapper > header"));
+        controllerFactory.renderLayouts();
         router.start("/");
     });
 });

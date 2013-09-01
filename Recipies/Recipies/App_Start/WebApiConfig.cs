@@ -9,6 +9,26 @@ namespace Recipies
     {
         public static void Register(HttpConfiguration config)
         {
+
+            config.Routes.MapHttpRoute(
+                name: "GetRecipesByCategoryApi",
+                routeTemplate: "api/categories/{id}/recipes",
+                defaults: new
+                {
+                    controller = "categories",
+                    action = "recipes"
+                }
+            );
+
+            config.Routes.MapHttpRoute(
+               name: "CategoriesApi",
+               routeTemplate: "api/categories/{action}",
+               defaults: new
+               {
+                   controller = "categories"
+               }
+           );
+
             config.Routes.MapHttpRoute(
                 name: "DeleteUsersApi",
                 routeTemplate: "api/users/{id}/delete",

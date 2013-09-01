@@ -7,17 +7,18 @@ namespace Recipies.Model
 {
     public class Recipe
     {
+        private ICollection<User> fans;
+        private ICollection<Ingredient> products;
+
         public int Id { get; set; }
 
         [Required]
-        [StringLength(40, MinimumLength = 6, ErrorMessage =
-             "Title must be between 6 and 30 characters long.")]
         public string Title { get; set; }
 
         [Required]
-        [MinLength(10)]
         public string Content { get; set; }
 
+         [Required]
         public DateTime PublishDate { get; set; }
 
         [Required]
@@ -26,17 +27,36 @@ namespace Recipies.Model
         //[InverseProperty("MyRecepies")]
         public virtual User Creator { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
-
         //[InverseProperty("Favorites")]
-        public virtual ICollection<User> Fans { get; set; }
-
-
 
         public Recipe()
         {
-            this.Products = new HashSet<Product>();
+            this.products = new HashSet<Ingredient>();
             this.Fans = new HashSet<User>();
+        }
+
+        public virtual ICollection<Ingredient> Products
+        {
+            get
+            {
+                return this.products;
+            }
+            set
+            {
+                this.products = value;
+            }
+        }
+
+        public virtual ICollection<User> Fans
+        {
+            get
+            {
+                return this.fans;
+            }
+            set
+            {
+                this.fans = value;
+            }
         }
     }
 }

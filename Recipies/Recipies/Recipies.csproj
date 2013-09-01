@@ -126,6 +126,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RecipesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -341,6 +343,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
+    <Content Include="ScriptsClient\app\controller.js" />
+    <Content Include="ScriptsClient\libs\http-requester.js" />
     <Content Include="ScriptsClient\libs\jquery-2.0.3.min.map" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="ScriptsClient\app.js" />

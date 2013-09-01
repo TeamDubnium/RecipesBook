@@ -7,6 +7,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Recipies.Data;
 using Recipies.Data.Migrations;
+using System.IO;
 
 namespace Recipies
 {
@@ -31,12 +32,12 @@ namespace Recipies
             using (RecipesContext context = new RecipesContext())
             {
 
-                context.Products.Count();
+               
 
-                //context.Database.Initialize(true);
+                context.Database.Initialize(true);
             }
 
-         
+            
         }
     }
 }
