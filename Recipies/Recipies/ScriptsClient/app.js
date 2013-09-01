@@ -23,12 +23,11 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
    
     var controllerFactory = controller.get();
 
+    controllerFactory.loadNav();
+
     router.route("/", function () {
           
-        controllerFactory.loadNav();
-
         controllerFactory.loadHomePage();
-      
     });
 
     router.route("/auth", function () {
@@ -38,10 +37,21 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
                 controllerFactory.loadNav();
                 history.back();
             }, function (err) {
+                history.back();
                 console.log(err);
-
             });
            
+    });
+
+    // TO DO -think of better way
+    router.route("/logout", function () {
+        controllerFactory.processLogout()
+             .then(function (data) {
+                 controllerFactory.loadNav();
+                 router.navigate("/");
+             }, function (err) {
+                 router.navigate("/");
+             });
     });
 
     router.route("/categories/:id", function (id) {
@@ -61,13 +71,12 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
 
 
     router.route("/allRecipes", function () {
-        alert("create recipe");
+        alert("all recipes");
 
     });
 
     $(function () {
         controllerFactory.renderLayouts();
-        router.start();
-        router.navigate("/");
+        router.start("/");
     });
 });
