@@ -53,6 +53,75 @@
 
     };
 
+    function UserController($scope, $http, $routeParams) {
+        var self = this;
+        this.persister = persister.get($http, "/api");
+        this.persister.user.getAll(function (users) {
+            $scope.users = users;
+        }, function () {
+            alert("Cannot get users");
+        });
+    }
+    
+    function SingleUserController($scope, $http, $routeParams) {
+        var self = this;
+        this.persister = persister.get($http, "/api");
+        $scope.user = {
+            username: "",
+            password: ""
+        }
+        $scope.password = "";
+        $scope.message = "";
+        var id = $routeParams["id"];
+        this.persister.user.getAll(function (users) {
+            $scope.user = _.first(_.filter(users, function (u) {
+                return u.id == id;
+            }));
+
+            if ($scope.user == null) {
+                document.location = "#/404";
+            }
+
+            $scope.changePassword = function () {
+                var userData = {
+                    id: id,
+                    username: $scope.user.username,
+                    password: $scope.password
+                };
+                self.persister.user.changePassword(userData, function () {
+                    $scope.message = "Password Changed";
+                }, function () {
+                    $scope.message = "Cannot Change Password";
+                });
+            }
+            $scope.promoteToAdmin = function () {
+                var userData = {
+                    id: id,
+                };
+                self.persister.user.promoteToAdmin(userData, function () {
+                    $scope.message = "Promoted to Admin";
+                }, function () {
+                    $scope.message = "Cannot Promote to Admin";
+                });
+            }
+            $scope.deleteUser = function () {
+                var userData = {
+                    id: id,
+                };
+                self.persister.user.deleteUser(userData, function () {
+                    $scope.message = "User Deleted";
+                }, function () {
+                    $scope.message = "Cannot Delete User";
+                });
+            }
+
+        }, function () {
+            alert("Cannot get users");
+        });
+
+        
+    }
+
 //   return {
 //       HomeController: HomeController,
 //       LoginController: LoginController
