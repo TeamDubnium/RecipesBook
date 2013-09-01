@@ -1,6 +1,6 @@
 ﻿/// <reference path="data.js" />
 
-define(["jquery", "persisters", "class", ], function ($, persisters) {
+define(["jquery", "class", ], function ($) {
     var displayName = "";
     var ViewModels = Class.create({
         init: function (persister) {
@@ -24,9 +24,7 @@ define(["jquery", "persisters", "class", ], function ($, persisters) {
             else {
                 greeting = "Hello " + username + ", we are glad to see you again";
             }
-            
-            
-
+           
             var viewModel = {
                 greeting: greeting
             };
@@ -90,8 +88,8 @@ define(["jquery", "persisters", "class", ], function ($, persisters) {
     });
 
     return {
-        get: function () {
-            return new ViewModels(persisters.get("api/"))
+        get: function (persister) {
+            return new ViewModels(persister)
         }
     }
 });

@@ -4,8 +4,8 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
         init: function () {
             this.layout = new kendo.Layout('<div id="content"></div>');
             this.navLayout = new kendo.Layout('<nav id="main-nav"></nav>');
-
-            this.viewModelFactory = viewModels.get();
+            this.persister = persisters.get("api");
+            this.viewModelFactory = viewModels.get(this.persister);
             this.viewFactory = views.get("ScriptsClient/partials/");
         },
 
@@ -16,33 +16,38 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
 
         loadNav: function onLoadNav() {
             var that = this;
-            //login check
 
-            if (true) {
-               
-                this.viewFactory.mainNavView()
+            this.viewFactory.mainNavView()
                 .then(function (viewHtml) {
                     that.viewModelFactory.buildCategoriesViewModel()
                         .then(function (vm) {
                             var view = new kendo.View(viewHtml, { model: vm });
                             that.navLayout.showIn("#main-nav", view);
                             console.log();
+
+                            if (that.persister.isUserLoggedIn()) {
+
+                                $("#menu").append($('<li><a href="#/logout">Logout</a></li>'));
+                            }
+                            else {
+                                $("#menu").append($('<li><a href="#/auth">Login/Register</a></li>'));
+                            }
+
+                            $('#categories-sub-menu').append($('<li><a href="#/allRecipes">All</a></li>'));
+
                             // add li <a #/allRecipes>
                             $("#menu").kendoMenu();
+
+
                         }, function (err) {
                             console.log(err)
                         });
-                   
+
                 }, function (err) {
                     console.log();
                 });
 
-                // add li logout
-            }
-            else {
-                // 
-                // add li logout
-            }
+            
 
 
         },
@@ -66,24 +71,35 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
         loadAuthPage: function () {
 
             var that = this;
-            
            
             var promise = new RSVP.Promise(function (resolve, reject) {
-                that.viewFactory.loginForm()
-               .then(function (loginFormHtml) {
 
-                   var vm = that.viewModelFactory.buildLoginFormVM(function () {
-                       console.log("callback");
-                       resolve("loged");
-                   })
-                   var view = new kendo.View(loginFormHtml, { model: vm });
-                   that.layout.showIn("#content", view);
+                if (that.persister.isUserLoggedIn()) {
+                    reject("user is already logedin");
+                }
+                else {
+               
+                    that.viewFactory.loginForm()
+                    .then(function (loginFormHtml) {
 
-               }, function (err) {
-                   console.log(err);
-               });
+                        var vm = that.viewModelFactory.buildLoginFormVM(function () {
+                            console.log("callback");
+                            resolve("loged");
+                        })
+                        var view = new kendo.View(loginFormHtml, { model: vm });
+                        that.layout.showIn("#content", view);
+
+                    }, function (err) {
+                        console.log(err);
+                    });
+                }
             });
             return promise;
+        },
+
+        processLogout: function () {
+
+            return this.persister.users.logout();
         },
 
         loadRecipesByCategoryPage: function (categoryId) {
