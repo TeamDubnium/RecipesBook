@@ -24,7 +24,7 @@ namespace Recipies.Controllers
         }
 
         [ActionName("recipes")]
-        public IEnumerable<RecipeModel> GetByCategory(int id)
+        public IQueryable<RecipeModel> GetByCategory(int id)
         {
 
             var context = new RecipesContext();
@@ -36,25 +36,10 @@ namespace Recipies.Controllers
             {
                 throw new ArgumentException("Not found category with such id","id");
             }
+         
+           var recipeEntities = context.Categories.FirstOrDefault(c => c.Id == id).Recipes.AsQueryable();
 
-            var recipeEntities = context.Categories.FirstOrDefault(c => c.Id == id).Recipes;
-
-            //var models = recipeEntities.Select(x => RecipeModel.FromRecipeToRecipeModel);
-            // not found recipes
-            List<RecipeModel> models = new List<RecipeModel>();
-
-            foreach (var recipe in recipeEntities)
-            {
-                models.Add(new RecipeModel 
-                {
-                    Id = recipe.Id,
-                    Title = recipe.Title,
-                    PublishDate = recipe.PublishDate,
-                    CreatorUser = recipe.Creator.Username,
-                    Rating = recipe.Fans.Count,
-                    CategoryName = recipe.Category.Title
-                });
-            }
+            var models = recipeEntities.Select(RecipeModel.FromRecipeToRecipeModel);
 
             return models;
         }
