@@ -24,13 +24,7 @@ define(["jquery", "class", ], function ($) {
             else {
                 greeting = "Hello " + username + ", we are glad to see you again";
             }
-<<<<<<< HEAD
 
-
-
-=======
-           
->>>>>>> b6fc3e0ad01c6e2f385701a4224f43053bf6afcd
             var viewModel = {
                 greeting: greeting
             };
@@ -99,6 +93,8 @@ define(["jquery", "class", ], function ($) {
 			        recipes: recipes
 			    });
 			    return recipesViewModel;
+			}, function (err) {
+			    console.log();
 			});
         },
     });

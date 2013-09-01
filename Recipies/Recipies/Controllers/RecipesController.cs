@@ -87,6 +87,20 @@ namespace Recipies.Controllers
                         Title = recipe.Title
                     };
 
+                foreach (var product in recipe.Products)
+                {
+                    addedRecipe.Products.Add(new Ingredient()
+                    {
+                        Product = new Product()
+                        {
+                            Title = product.Name
+                        },
+                        Quantity = product.Quantity,
+                        Mesaurement = Measurement.Liter
+
+                    });
+                }
+
                 context.Recipes.Add(addedRecipe);
                 context.SaveChanges();
 

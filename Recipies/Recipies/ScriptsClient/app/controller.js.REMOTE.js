@@ -16,6 +16,7 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
 
         loadNav: function onLoadNav() {
             var that = this;
+
             this.viewFactory.mainNavView()
                 .then(function (viewHtml) {
                     that.viewModelFactory.buildCategoriesViewModel()
@@ -46,7 +47,7 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
                     console.log();
                 });
 
-
+            
 
 
         },
@@ -58,9 +59,9 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
             this.viewFactory.homePageView()
                .then(function (viewHtml) {
                    var vm = that.viewModelFactory.buildHomeViewModel()
-
-                   var view = new kendo.View(viewHtml, { model: vm });
-                   that.layout.showIn("#content", view);
+                   
+                    var view = new kendo.View(viewHtml, { model: vm });
+                    that.layout.showIn("#content", view);
 
                }, function (err) {
                    console.log();
@@ -70,14 +71,14 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
         loadAuthPage: function () {
 
             var that = this;
-
+           
             var promise = new RSVP.Promise(function (resolve, reject) {
 
                 if (that.persister.isUserLoggedIn()) {
                     reject("user is already logedin");
                 }
                 else {
-
+               
                     that.viewFactory.loginForm()
                     .then(function (loginFormHtml) {
 
@@ -102,22 +103,10 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
         },
 
         loadRecipesByCategoryPage: function (categoryId) {
-            var self = this;
-
-            this.viewFactory.recipesByCategoryView()
-                .then(function (viewHtml) {
-                    var vm = self.viewModelFactory.getRecipesByCategoryViewModel(categoryId);
-                    var view = new kendo.View(viewHtml, { model: vm });
-
-                    self.layout.showIn("#content", view);
-
-                    console.log(res);
-
-                }, function (err) {
-                    console.log();
-                });
+            /// <summary></summary>
+            /// <param name="categoryId" type="Object"></param> grid
         },
-
+      
 
     });
 
