@@ -2,6 +2,23 @@
 
 define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, httpRequester) {
 
+    var username = localStorage.getItem("recipe-book-username");
+    var sessionKey = localStorage.getItem("recipe-book-sessionKey");
+
+    function saveSession(userData) {
+        localStorage.setItem("recipe-book-username", userData.username);
+        localStorage.setItem("recipe-book-sessionKey", userData.sessionKey);
+        username = userData.username;
+        sessionKey = userData.sessionKey;
+    }
+
+    function clearSession() {
+        localStorage.removeItem("recipe-book-username");
+        localStorage.removeItem("recipe-book-sessionKey");
+        username = null;
+        sessionKey = null;
+    }
+
     var CategoriesPersister = Class.create({
         init: function (apiUrl) {
             this.apiUrl = apiUrl;
@@ -53,8 +70,16 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
             this.apiUrl = apiUrl;
             this.categories = new CategoriesPersister(this.apiUrl + "categories");
             this.users = new UsersPersister(this.apiUrl + "users");
+        },
+
+        isUserLoggedIn: function () {
+            var isLoggedIn = username != null && sessionKey != null;
+            return isLoggedIn;
+        },
+        getCurrentUsername: function () {
+            return username;
         }
-    });
+        });
 
     return {
         get: function (apiUrl) {

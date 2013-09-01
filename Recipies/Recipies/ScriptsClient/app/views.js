@@ -32,6 +32,13 @@ define(["jquery", "class", "rsvp"], function ($) {
         },
         loginForm: function () {
             return this.loadPartialHtml("login-form");
+        },
+        homePageView: function () {
+            return this.loadPartialHtml("home-page");
+        },
+
+        recipesByCategoryView: function () {
+            //
         }
     });
 
