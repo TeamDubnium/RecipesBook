@@ -17,15 +17,15 @@ define(["jquery", "persisters", "class", ], function ($, persisters) {
             var username = this.persister.getCurrentUsername();
             var greeting = "";
             if (!username) {
-               
+
                 greeting = "Hello stranger, have a nice time in our site.";
 
             }
             else {
                 greeting = "Hello " + username + ", we are glad to see you again";
             }
-            
-            
+
+
 
             var viewModel = {
                 greeting: greeting
@@ -40,7 +40,7 @@ define(["jquery", "persisters", "class", ], function ($, persisters) {
 
 
         buildCategoriesViewModel: function () {
-    
+
 
             var promise = this.persister.categories.all()
                 .then(function (categoriesAll) {
@@ -86,7 +86,17 @@ define(["jquery", "persisters", "class", ], function ($, persisters) {
                 }
             });
             return viewModel;
-        }
+        },
+
+        getRecipesByCategoryViewModel: function (id) {
+            return this.persister.categories.byId(id)
+			.then(function (recipes) {
+			    var recipesViewModel = new kendo.observable({
+			        recipes: recipes
+			    });
+			    return recipesViewModel;
+			});
+        },
     });
 
     return {

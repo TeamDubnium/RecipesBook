@@ -18,17 +18,17 @@ require.config({
 
 require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
 
-   
+
     var router = new kendo.Router();
-   
+
     var controllerFactory = controller.get();
 
     router.route("/", function () {
-          
+
         controllerFactory.loadNav();
 
         controllerFactory.loadHomePage();
-      
+
     });
 
     router.route("/auth", function () {
@@ -41,15 +41,14 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
                 console.log(err);
 
             });
-           
+
     });
 
     router.route("/categories/:id", function (id) {
-        alert(id);
-        // redirect -> /recipe/:id
+        controllerFactory.loadRecipesByCategoryPage(id);
     });
 
-      router.route("/recipe/:id", function (id) {
+    router.route("/recipe/:id", function (id) {
         alert(id);
         // detail view recipe
     });

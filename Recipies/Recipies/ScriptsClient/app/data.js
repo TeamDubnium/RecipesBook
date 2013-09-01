@@ -25,6 +25,10 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
         },
         all: function () {
             return httpRequester.getJSON(this.apiUrl);
+        },
+        byId: function (id) {
+            var url = this.apiUrl + "/" + id + "/recipes";
+            return httpRequester.getJSON(url);
         }
     });
 
@@ -79,7 +83,7 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
         getCurrentUsername: function () {
             return username;
         }
-        });
+    });
 
     return {
         get: function (apiUrl) {
