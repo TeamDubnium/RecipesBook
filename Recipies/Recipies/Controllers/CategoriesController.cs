@@ -16,8 +16,6 @@ namespace Recipies.Controllers
 
             var context = new RecipesContext();
 
-            //this.CheckSession(context); //no need of authorized access
-
             var recipeEntities = context.Categories;
             var model = recipeEntities.OrderBy(x => x.Title)
                 .Select(CategoryModel.FromCategoryToCategoryModel);

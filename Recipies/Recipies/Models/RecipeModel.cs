@@ -39,7 +39,7 @@ namespace Recipies.Models
         [JsonProperty("creator")]
         public string CreatorUser { get; set; }
 
-         [JsonProperty("publish-date")]
+        [JsonProperty("publish-date")]
         public DateTime PublishDate { get; set; }
 
         [JsonProperty("likes")]
