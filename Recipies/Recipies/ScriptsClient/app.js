@@ -18,16 +18,17 @@ require.config({
 
 require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
 
-   
+
     var router = new kendo.Router();
-   
+
     var controllerFactory = controller.get();
 
     controllerFactory.loadNav();
 
     router.route("/", function () {
-          
+
         controllerFactory.loadHomePage();
+
     });
 
     router.route("/auth", function () {
@@ -40,7 +41,7 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
                 history.back();
                 console.log(err);
             });
-           
+
     });
 
     // TO DO -think of better way
@@ -55,11 +56,10 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
     });
 
     router.route("/categories/:id", function (id) {
-        alert(id);
-        // redirect -> /recipe/:id
+        controllerFactory.loadRecipesByCategoryPage(id);
     });
 
-      router.route("/recipe/:id", function (id) {
+    router.route("/recipe/:id", function (id) {
         alert(id);
         // detail view recipe
     });

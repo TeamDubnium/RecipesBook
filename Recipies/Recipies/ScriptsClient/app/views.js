@@ -42,7 +42,7 @@ define(["jquery", "class", "rsvp"], function ($) {
         },
 
         recipesByCategoryView: function () {
-            //
+            return this.loadPartialHtml("recipes-by-category");
         }
     });
 

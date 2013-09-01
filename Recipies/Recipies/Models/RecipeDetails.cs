@@ -10,18 +10,18 @@ namespace Recipies.Models
 {
     public class RecipeDetails : RecipeModel
     {
-        private IEnumerable<string> products;
+        private IEnumerable<ProductDetails> products;
 
         [JsonProperty("content")]
         public string Content { get; set; }
 
         public RecipeDetails()
         {
-            this.products = new HashSet<string>();
+            this.products = new HashSet<ProductDetails>();
         }
 
         [JsonProperty("products")]
-        public IEnumerable<string> Products
+        public IEnumerable<ProductDetails> Products
         {
             get
             {
@@ -34,7 +34,7 @@ namespace Recipies.Models
         }
 
         [JsonIgnore]
-        public static Expression<Func<Recipe, RecipeDetails >> FromRecipeToRecipeDetails
+        public static Expression<Func<Recipe, RecipeDetails>> FromRecipeToRecipeDetails
         {
             get
             {
@@ -47,9 +47,16 @@ namespace Recipies.Models
                     PublishDate = x.PublishDate,
                     CreatorUser = x.Creator.Username,
                     Rating = x.Fans.Count,
-                    Products = x.Products.Select(p => p.Product.Title).Distinct()
+                    Products = x.Products.Select(
+                    p => new ProductDetails() { Name = p.Product.Title, Quantity = p.Quantity }).Distinct()
                 };
             }
         }
+    }
+
+    public class ProductDetails
+    {
+        public string Name { get; set; }
+        public int Quantity { get; set; }
     }
 }
