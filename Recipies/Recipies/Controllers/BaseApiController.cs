@@ -28,7 +28,7 @@ namespace Recipies.Controllers
         {
             var sessionKey = this.Request.Headers.GetValues("X-sessionKey").FirstOrDefault();
 
-            sessionKey = sessionKey.Substring("sessionKey=".Length);
+            //sessionKey = sessionKey.Substring("sessionKey=".Length);
             if (sessionKey == null)
             {
                 throw new InvalidOperationException("No session key found.");
