@@ -88,6 +88,20 @@ namespace Recipies.Controllers
                         Title = recipe.Title
                     };
 
+                foreach (var product in recipe.Products)
+                {
+                    addedRecipe.Products.Add(new Ingredient()
+                    {
+                        Product = new Product()
+                        {
+                            Title = product.Name
+                        },
+                        Quantity = product.Quantity,
+                        Mesaurement = Measurement.Liter
+
+                    });
+                }
+
                 context.Recipes.Add(addedRecipe);
                 context.SaveChanges();
 
@@ -121,6 +135,33 @@ namespace Recipies.Controllers
                     context.SaveChanges();
                 }
                 var response = this.Request.CreateResponse(HttpStatusCode.OK);
+                return response;
+            });
+
+            return responseMsg;
+        }
+
+        [HttpGet]
+        [ActionName("favourites")]
+        public HttpResponseMessage Favourites()
+        {
+            var responseMsg = this.PerformOperationAndHandleExceptions(() =>
+            {
+                var context = new RecipesContext();
+
+                var user = GetCurrentUser(context);
+
+                var favourites = from favourite
+                                 in user.Favorites
+                                 select new RecipeModel()
+                                 {
+                                     CategoryName = favourite.Category.Title,
+                                     CreatorUser = favourite.Creator.Username,
+                                     PublishDate = favourite.PublishDate,
+                                     Rating = favourite.Fans.Count,
+                                     Title = favourite.Title
+                                 };
+                var response = this.Request.CreateResponse(HttpStatusCode.OK, favourites);
                 return response;
             });
 

@@ -25,6 +25,10 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
         },
         all: function () {
             return httpRequester.getJSON(this.apiUrl);
+        },
+        byId: function (id) {
+            var url = this.apiUrl + "/" + id + "/recipes";
+            return httpRequester.getJSON(url);
         }
     });
 
@@ -81,11 +85,41 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
         }
     });
 
+    var RecipesPersister = Class.create({
+        init: function (apiUrl) {
+            this.apiUrl = apiUrl;
+        },
+        add: function (username, password) {
+            var self = this;
+            var promise = new RSVP.Promise(function (resolve, reject) {
+                var recipe = {
+                    title: title,
+                    content: content,
+                    products: products
+                };
+                return httpRequester.postJSON(self.apiUrl + "/add", recipe)
+					.then(function (data) {
+					    saveSession(data);
+					    resolve(data);
+					});
+            });
+            return promise;
+        },
+        all: function () {
+            return httpRequester.getJSON(this.apiUrl);
+        },
+        favourites: function () {
+            var url = this.apiUrl + "/favourites";
+            return httpRequester.getJSON(url);
+        },
+    });
+
     var DataPersister = Class.create({
         init: function (apiUrl) {
             this.apiUrl = apiUrl;
             this.categories = new CategoriesPersister(this.apiUrl + "/categories");
             this.users = new UsersPersister(this.apiUrl + "/users");
+            this.recipes = new RecipesPersister(this.apiUrl + "/recipes");
         },
 
         isUserLoggedIn: function () {
@@ -95,7 +129,7 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
         getCurrentUsername: function () {
             return username;
         }
-        });
+    });
 
     return {
         get: function (apiUrl) {

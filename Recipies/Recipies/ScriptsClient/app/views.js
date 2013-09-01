@@ -37,8 +37,12 @@ define(["jquery", "class", "rsvp"], function ($) {
             return this.loadPartialHtml("home-page");
         },
 
+        createRecipePageView: function () {
+            return this.loadPartialHtml("create-recipe");
+        },
+
         recipesByCategoryView: function () {
-            //
+            return this.loadPartialHtml("recipes-by-category");
         }
     });
 
