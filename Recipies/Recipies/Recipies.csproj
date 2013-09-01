@@ -376,6 +376,7 @@
     <Content Include="ScriptsClient\libs\rsvp.min.js" />
     <Content Include="ScriptsClient\libs\sha1.js" />
     <Content Include="ScriptsClient\libs\_references.js" />
+    <Content Include="ScriptsClient\partials\create-recipe.html" />
     <Content Include="ScriptsClient\partials\home-page.html" />
     <Content Include="ScriptsClient\partials\login-form.html" />
     <Content Include="ScriptsClient\partials\main-nav-view.html" />

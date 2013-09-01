@@ -102,6 +102,12 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
             return this.persister.users.logout();
         },
 
+        loadCreateRecipePage: function () {
+
+            
+        },
+
+
         loadRecipesByCategoryPage: function (categoryId) {
             /// <summary></summary>
             /// <param name="categoryId" type="Object"></param> grid
