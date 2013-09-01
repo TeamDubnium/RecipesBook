@@ -88,15 +88,13 @@ define(["jquery", "class", ], function ($) {
         getRecipesByCategoryViewModel: function (id) {
             var promise = this.persister.categories.byId(id)
                 .then(function (recipes) {
-                    console.log(recipes);
-
                     var viewModel = {
                         recipes: recipes
                     };
 
                     var categoriesViewModel = new kendo.observable(
                         viewModel
-                    )
+                    );
                     return categoriesViewModel;
 
                 }, function (err) {
