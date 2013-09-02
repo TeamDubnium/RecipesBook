@@ -229,29 +229,46 @@ define(["jquery", "class", ], function ($) {
 
         buildRecipeByIdViewModel: function (id) {
             var self = this;
-
-
-
-            var promise = this.persister.recipes.byId(id)
+            var promise = new RSVP.Promise(function (resolve, reject) {
+                self.persister.recipes.byId(id)
                 .then(function (recipe) {
                     console.log(recipe);
 
-                    var viewModel = {
-                        recipe: recipe,
-                        likeRecipe: function () {
-                            self.persister.recipes.like(id).then(function () { alert("you liked this") });
-                        }
-                    };
+                    self.persister.recipes.state(id).
+                        then(function (returnedState) {
+                            var viewModel = {
+                                recipe: recipe,
+                                state: returnedState,
 
-                    var recipeViewModel = new kendo.observable(
-                        viewModel
-                    )
-                    return recipeViewModel;
+                                likeRecipe: function () {
+                                    if (self.persister.isUserLoggedIn()) {
+                                        self.persister.recipes.like(id)
+                                            .then(function () {
+                                                location.reload()
+                                            }, function (err) {
+                                                console.log(err);
+                                            });
+                                    }
+                                    else {
+                                        document.location = "#/auth";
+                                    }
+                                }
+                            }
+
+                            var recipeViewModel = new kendo.observable(
+                                viewModel
+                            )
+                            resolve(recipeViewModel);
+
+                        }, function (err) {
+                            console.log(err);
+                            reject(err);
+                        });
 
                 }, function (err) {
                     console.log(err)
                 });
-
+            });
             return promise;
         },
     });

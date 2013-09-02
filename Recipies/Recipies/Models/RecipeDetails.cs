@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Recipies.Model;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,12 @@ namespace Recipies.Models
         public RecipeDetails()
         {
             this.products = new HashSet<ProductDetails>();
+        }
+
+        private static string GetMeasurementAsString(Measurement mesaurement)
+        {
+            return Enum.GetName(mesaurement.GetType(), mesaurement);
+
         }
 
         [JsonProperty("products")]
@@ -48,16 +55,22 @@ namespace Recipies.Models
                     CreatorUser = x.Creator.Username,
                     Rating = x.Fans.Count,
                     Products = x.Products.Select(
-                    p => new ProductDetails() { Name = p.Product.Title, Quantity = p.Quantity, Measurement = p.Mesaurement.ToString() }).Distinct()
+                    p => new ProductDetails() { Name = p.Product.Title, Quantity = p.Quantity, M = p.Mesaurement}).Distinct()
                 };
             }
         }
+
     }
 
     public class ProductDetails
     {
         public string Name { get; set; }
         public int Quantity { get; set; }
+
+        [JsonProperty("mesaurementString")]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public Measurement M { get; set; }
+
         public string Measurement { get; set; }
     }
 }

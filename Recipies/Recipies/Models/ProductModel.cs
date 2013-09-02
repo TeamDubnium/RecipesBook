@@ -30,10 +30,15 @@ namespace Recipies.Models
                 return x => new ProductModel()
                 {
                     Name = x.Product.Title,
-                    Mesaurement =  x.Mesaurement,
+                    Mesaurement = x.Mesaurement,
                     Quantity = x.Quantity
                 };
             }
         }
+    }
+    public class StateModel
+    {
+        [JsonProperty("state")]
+        public bool State { get; set; }
     }
 }
