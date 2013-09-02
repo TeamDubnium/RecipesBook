@@ -47,31 +47,33 @@ namespace Recipies.Controllers
                      // CheckSession(context);
 
                      var recipeEntities = context.Recipes.Include("Categories");
-                     // var model = recipeEntities.Where(x => x.Id == id)
-                     //     .Select(RecipeDetails.FromRecipeToRecipeDetails)
-                     //     .FirstOrDefault();
+                     var model = recipeEntities.Where(x => x.Id == id)
+                         .Select(RecipeDetails.FromRecipeToRecipeDetails)
+                         .FirstOrDefault();
 
 
-                     var model =
-                     (from r in recipeEntities
-                      where r.Id == id
-                      select new RecipeDetails()
-                      {
-                          Title = r.Title,
-                          CreatorUser = r.Creator.Username,
-                          CategoryName = r.Category.Title,
-                          PublishDate = r.PublishDate,
-                          Rating = r.Fans.AsQueryable().Count(),
-                          Id = r.Id,
-                          Content = r.Content,
-                          Products = (from p in r.Products
-                                      select new ProductDetails()
-                                      {
-                                          Name = p.Product.Title,
-                                          Quantity = p.Quantity
-                                      }).AsQueryable()
+                     //var model =
+                     //(from r in recipeEntities
+                     // where r.Id == id
+                     // select new RecipeDetails()
+                     // {
+                     //     Title = r.Title,
+                     //     CreatorUser = r.Creator.Username,
+                     //     CategoryName = r.Category.Title,
+                     //     PublishDate = r.PublishDate,
+                     //     Rating = r.Fans.AsQueryable().Count(),
+                     //     Id = r.Id,
+                     //     Content = r.Content,
+                     //     Products = (from p in r.Products
+                     //                 select new ProductDetails()
+                     //                 {
+                     //                     Name = p.Product.Title,
+                     //                     Quantity = p.Quantity,
+                     //                     Measurement = Enum.GetName(p.Mesaurement.GetType(), p.Mesaurement)
+                     //                 }).AsQueryable()
 
-                      }).FirstOrDefault();
+                     // }).FirstOrDefault();
+
                      if (model == null)
                      {
                          throw new ArgumentException("No such recipe");
@@ -160,7 +162,7 @@ namespace Recipies.Controllers
                     user.Favorites.Add(recipe);
                     context.SaveChanges();
                 }
-                var response = this.Request.CreateResponse(HttpStatusCode.OK);
+                var response = this.Request.CreateResponse(HttpStatusCode.NoContent);
                 return response;
             });
 
@@ -188,6 +190,48 @@ namespace Recipies.Controllers
                                      Title = favourite.Title
                                  };
                 var response = this.Request.CreateResponse(HttpStatusCode.OK, favourites);
+                return response;
+            });
+
+            return responseMsg;
+        }
+
+        [HttpGet]
+        [ActionName("state")]
+        public HttpResponseMessage State(int id)
+        {
+            var responseMsg = this.PerformOperationAndHandleExceptions(() =>
+            {
+                var context = new RecipesContext();
+
+                var sessionKey = this.Request.Headers.GetValues("X-sessionKey").FirstOrDefault();
+
+                //sessionKey = sessionKey.Substring("sessionKey=".Length);
+                if (sessionKey == null)
+                {
+                    throw new InvalidOperationException("No session key found.");
+                }
+
+                var user = context.Users.FirstOrDefault(
+                    usr => usr.SessionKey == sessionKey);
+
+                if (user == null)
+                {
+                    StateModel notLoggedUserState = new StateModel() { State = false };
+                    var notLoggedUserResponse = this.Request.CreateResponse(HttpStatusCode.OK, notLoggedUserState);
+                    return notLoggedUserResponse;
+                }
+
+                var recipe = context.Recipes.FirstOrDefault(x => x.Id == id);
+
+                if (recipe == null)
+                {
+                    throw new ArgumentException("No such recipe");
+                }
+
+                StateModel state = new StateModel() { State = recipe.Fans.Contains(user) };
+
+                var response = this.Request.CreateResponse(HttpStatusCode.OK, state);
                 return response;
             });
 

@@ -117,6 +117,12 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
             return httpRequester.putJSON(url, {}, header);
         },
 
+        state: function (id) {
+            var url = this.apiUrl + "/state/" + id;
+            var header = { "X-sessionKey": sessionKey };
+            return httpRequester.getJSON(url, header);
+        },
+
         favourites: function () {
             var url = this.apiUrl + "/favourites";
             var header = { "X-sessionKey": sessionKey };
