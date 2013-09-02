@@ -118,8 +118,6 @@
         }, function () {
             alert("Cannot get users");
         });
-
-        
     }
 
     function CategoryController($scope, $http, $routeParams) {
