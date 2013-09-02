@@ -24,7 +24,7 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
             this.apiUrl = apiUrl;
         },
         all: function () {
-            return httpRequester.getJSON(this.apiUrl );
+            return httpRequester.getJSON(this.apiUrl);
         },
         byId: function (id) {
             var url = this.apiUrl + "/" + id + "/recipes";
@@ -93,7 +93,7 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
             var self = this;
             var header = { "X-sessionKey": sessionKey };
             var promise = new RSVP.Promise(function (resolve, reject) {
-                
+
                 return httpRequester.postJSON(self.apiUrl + "/add", recipe, header)
 					.then(function (data) {
 					    saveSession(data);
@@ -106,6 +106,17 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
             var url = this.apiUrl + "/all";
             return httpRequester.getJSON(url);
         },
+        byId: function (id) {
+            var url = this.apiUrl + "/get/" + id;
+            return httpRequester.getJSON(url);
+        },
+
+        like: function (id) {
+            var url = this.apiUrl + "/like/" + id;
+            var header = { "X-sessionKey": sessionKey };
+            return httpRequester.putJSON(url, {}, header);
+        },
+
         favourites: function () {
             var url = this.apiUrl + "/favourites";
             var header = { "X-sessionKey": sessionKey };

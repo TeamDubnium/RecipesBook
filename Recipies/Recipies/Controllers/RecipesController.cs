@@ -47,24 +47,31 @@ namespace Recipies.Controllers
                      // CheckSession(context);
 
                      var recipeEntities = context.Recipes.Include("Categories");
-                    // var model = recipeEntities.Where(x => x.Id == id)
-                    //     .Select(RecipeDetails.FromRecipeToRecipeDetails)
-                    //     .FirstOrDefault();
+                     // var model = recipeEntities.Where(x => x.Id == id)
+                     //     .Select(RecipeDetails.FromRecipeToRecipeDetails)
+                     //     .FirstOrDefault();
 
 
-                   var model =
-                       (from r in recipeEntities
-                        where r.Id == id
-                        select new RecipeModel()
-                        {
-                            Title = r.Title,
-                            CreatorUser = r.Creator.Username,
-                            CategoryName = r.Category.Title,
-                            PublishDate = r.PublishDate,
-                            Rating = r.Fans.AsQueryable().Count(),
-                            Id = r.Id
-                   
-                        });
+                     var model =
+                     (from r in recipeEntities
+                      where r.Id == id
+                      select new RecipeDetails()
+                      {
+                          Title = r.Title,
+                          CreatorUser = r.Creator.Username,
+                          CategoryName = r.Category.Title,
+                          PublishDate = r.PublishDate,
+                          Rating = r.Fans.AsQueryable().Count(),
+                          Id = r.Id,
+                          Content = r.Content,
+                          Products = (from p in r.Products
+                                      select new ProductDetails()
+                                      {
+                                          Name = p.Product.Title,
+                                          Quantity = p.Quantity
+                                      }).AsQueryable()
+
+                      }).FirstOrDefault();
                      if (model == null)
                      {
                          throw new ArgumentException("No such recipe");

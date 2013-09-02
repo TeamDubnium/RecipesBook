@@ -175,7 +175,7 @@ define(["jquery", "class", ], function ($) {
 
                                         createRecipe: function (e) {
 
-                                            
+
                                             var promiseCreateRecipe =
                                             self.persister.recipes
                                                 .add({ title: this.get("title"), content: this.get("content"), "categoryName": this.get("category"), products: this.get("slectedProducts") })
@@ -197,7 +197,7 @@ define(["jquery", "class", ], function ($) {
 
                                             var prod = this.get("slectedProducts");
                                             prod.push({ "name": this.get("product"), "quantity": this.get("quantity"), measurement: this.get("measurement") });
-                                           
+
                                             this.set("slectedProducts", prod);
 
                                             this.set("product", "");
@@ -225,7 +225,35 @@ define(["jquery", "class", ], function ($) {
             });
             return promise;
 
-        }
+        },
+
+        buildRecipeByIdViewModel: function (id) {
+            var self = this;
+
+
+
+            var promise = this.persister.recipes.byId(id)
+                .then(function (recipe) {
+                    console.log(recipe);
+
+                    var viewModel = {
+                        recipe: recipe,
+                        likeRecipe: function () {
+                            self.persister.recipes.like(id).then(function () { alert("you liked this") });
+                        }
+                    };
+
+                    var recipeViewModel = new kendo.observable(
+                        viewModel
+                    )
+                    return recipeViewModel;
+
+                }, function (err) {
+                    console.log(err)
+                });
+
+            return promise;
+        },
     });
 
     return {

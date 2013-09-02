@@ -76,7 +76,11 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
 
         controllerFactory.loadCreateRecipePage()
          .then(function (id) {
+<<<<<<< HEAD
              router.navigate("#/recipe/"+ id);
+=======
+             router.navigate("/recipe/:" + id);
+>>>>>>> 9519d36b99bc3652b973c64c1428000954630384
          }, function (err) {
              router.navigate("/auth");
          });

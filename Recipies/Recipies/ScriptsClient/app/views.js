@@ -43,6 +43,10 @@ define(["jquery", "class", "rsvp"], function ($) {
 
         recipesByCategoryView: function () {
             return this.loadPartialHtml("recipes-by-category");
+        },
+
+        simpleRecipeView: function () {
+            return this.loadPartialHtml("simple-recipe");
         }
     });
 
