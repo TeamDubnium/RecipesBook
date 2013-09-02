@@ -765,6 +765,7 @@ namespace Recipies.Data.Migrations
                    u => u.Title,
                   second);
 
+
                 for (int j = 0; j < ingredians[1].Count; j++)
                 {
                     ingredians[1][j].Recipe = second;
