@@ -26,6 +26,7 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
 
                             if (that.persister.isUserLoggedIn()) {
                                 $('#menu').append($('<li><a href="#/recipes/favourites">Favourites</a></li>'));
+                                $('#menu').append($('<li><a href="#/recipes/my-recipes">My Recipes</a></li>'));
                                 $("#menu").append($('<li><a href="#/logout">Logout</a></li>'));
                             }
                             else {
@@ -177,6 +178,24 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
             this.viewFactory.recipesByCategoryView()
                 .then(function (viewHtml) {
                     self.viewModelFactory.getFavouriteRecipesViewModel(categoryId).then(function (vm) {
+                        var view = new kendo.View(viewHtml, { model: vm });
+
+                        self.layout.showIn("#content", view);
+
+                        console.log(res);
+
+                    }, function (err) {
+                        console.log();
+                    });
+                });
+        },
+
+        loadMyRecipes: function (categoryId) {
+            var self = this;
+
+            this.viewFactory.recipesByCategoryView()
+                .then(function (viewHtml) {
+                    self.viewModelFactory.getMyRecipesViewModel().then(function (vm) {
                         var view = new kendo.View(viewHtml, { model: vm });
 
                         self.layout.showIn("#content", view);

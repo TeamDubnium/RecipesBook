@@ -76,7 +76,7 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
 
         controllerFactory.loadCreateRecipePage()
          .then(function (id) {
-             router.navigate("#/recipe/"+ id);
+             router.navigate("#/recipe/" + id);
          }, function (err) {
              router.navigate("/auth");
          });
@@ -94,6 +94,11 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
         controllerFactory.loadFavouriteRecipes();
 
     });
+    router.route("/recipes/my-recipes", function () {
+        controllerFactory.loadMyRecipes();
+
+    });
+
 
     $(function () {
         controllerFactory.loadNav();

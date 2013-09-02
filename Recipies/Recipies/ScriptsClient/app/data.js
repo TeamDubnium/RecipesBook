@@ -73,7 +73,7 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
                 var user = {
                 };
 
-                var header = { "X-sessionKey": sessionKey };
+                var header = { "X-sessionKey": localStorage.getItem("recipe-book-sessionKey") };
 
                 return httpRequester.putJSON(self.apiUrl + "/logout", user, header)
 					.then(function (data) {
@@ -91,12 +91,12 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
         },
         add: function (recipe) {
             var self = this;
-            var header = { "X-sessionKey": sessionKey };
+            var header = { "X-sessionKey": localStorage.getItem("recipe-book-sessionKey") };
             var promise = new RSVP.Promise(function (resolve, reject) {
 
                 return httpRequester.postJSON(self.apiUrl + "/add", recipe, header)
 					.then(function (data) {
-					    saveSession(data);
+					    //saveSession(data);
 					    resolve(data);
 					});
             });
@@ -113,19 +113,25 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
 
         like: function (id) {
             var url = this.apiUrl + "/like/" + id;
-            var header = { "X-sessionKey": sessionKey };
+            var header = { "X-sessionKey": localStorage.getItem("recipe-book-sessionKey") };
             return httpRequester.putJSON(url, {}, header);
         },
 
         state: function (id) {
             var url = this.apiUrl + "/state/" + id;
-            var header = { "X-sessionKey": sessionKey };
+            var header = { "X-sessionKey": localStorage.getItem("recipe-book-sessionKey") };
             return httpRequester.getJSON(url, header);
         },
 
         favourites: function () {
             var url = this.apiUrl + "/favourites";
-            var header = { "X-sessionKey": sessionKey };
+            var header = { "X-sessionKey": localStorage.getItem("recipe-book-sessionKey") };
+            return httpRequester.getJSON(url, header);
+        },
+
+        myRecipes: function () {
+            var url = this.apiUrl + "/mine";
+            var header = { "X-sessionKey": localStorage.getItem("recipe-book-sessionKey") };
             return httpRequester.getJSON(url, header);
         },
     });
@@ -152,8 +158,9 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
         },
 
         isUserLoggedIn: function () {
-            var isLoggedIn = sessionKey;
-            return isLoggedIn;
+            var sKey = localStorage.getItem("recipe-book-sessionKey");
+            var usrName = localStorage.getItem("recipe-book-username");
+            return sKey && usrName;
         },
         getCurrentUsername: function () {
             return username;

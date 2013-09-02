@@ -197,6 +197,32 @@ namespace Recipies.Controllers
         }
 
         [HttpGet]
+        [ActionName("mine")]
+        public HttpResponseMessage Mine()
+        {
+            var responseMsg = this.PerformOperationAndHandleExceptions(() =>
+            {
+                var context = new RecipesContext();
+
+                var user = GetCurrentUser(context);
+
+                var favourites = from favourite
+                                 in user.MyRecipes
+                                 select new RecipeModel()
+                                 {
+                                     CategoryName = favourite.Category.Title,
+                                     CreatorUser = favourite.Creator.Username,
+                                     PublishDate = favourite.PublishDate,
+                                     Rating = favourite.Fans.Count,
+                                     Title = favourite.Title
+                                 };
+                var response = this.Request.CreateResponse(HttpStatusCode.OK, favourites);
+                return response;
+            });
+
+            return responseMsg;
+        }
+        [HttpGet]
         [ActionName("state")]
         public HttpResponseMessage State(int id)
         {

@@ -146,6 +146,26 @@ define(["jquery", "class", ], function ($) {
             return promise;
         },
 
+
+        getMyRecipesViewModel: function () {
+            var promise = this.persister.recipes.myRecipes()
+                .then(function (recipes) {
+                    var viewModel = {
+                        recipes: recipes
+                    };
+
+                    var categoriesViewModel = new kendo.observable(
+                        viewModel
+                    );
+                    return categoriesViewModel;
+
+                }, function (err) {
+                    console.log(err)
+                });
+
+            return promise;
+        },
+
         buildCreateRecipeFormVM: function (successCallback) {
             var self = this;
 
@@ -174,11 +194,17 @@ define(["jquery", "class", ], function ($) {
                                         slectedProducts: [],
 
                                         createRecipe: function (e) {
-
+                                            var escapedTitle = $("<div />").html(this.get("title")).text()
+                                            var escapedContent = $("<div />").html(this.get("content")).text()
 
                                             var promiseCreateRecipe =
                                             self.persister.recipes
-                                                .add({ title: this.get("title"), content: this.get("content"), "categoryName": this.get("category"), products: this.get("slectedProducts") })
+                                                .add({
+                                                    title: escapedTitle,
+                                                    content: escapedContent,
+                                                    "categoryName": this.get("category"),
+                                                    products: this.get("slectedProducts")
+                                                })
                                                     .then(function (addedRecipe) {
                                                         console.log(addedRecipe);
                                                         successCallback(addedRecipe.Id);
@@ -194,9 +220,9 @@ define(["jquery", "class", ], function ($) {
                                         },
 
                                         addProduct: function (e) {
-
+                                            var escapedName = $("<div />").html(this.get("product")).text()
                                             var prod = this.get("slectedProducts");
-                                            prod.push({ "name": this.get("product"), "quantity": this.get("quantity"), measurement: this.get("measurement") });
+                                            prod.push({ "name": escapedName, "quantity": this.get("quantity"), measurement: this.get("measurement") });
 
                                             this.set("slectedProducts", prod);
 
