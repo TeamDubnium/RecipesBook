@@ -1,4 +1,5 @@
-﻿<input ng-model="query" />
+﻿<span>Search: </span>
+<input ng-model="query" />
 <ul>
     <li ng-repeat="category in categories | filter:query"><a href="#/categories/{{category.id}}">{{category.title}}</a></li>
 </ul>
