@@ -26,12 +26,14 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
     controllerFactory.loadNav();
 
     router.route("/", function () {
+        controllerFactory.loadNav();
 
         controllerFactory.loadHomePage();
 
     });
 
     router.route("/auth", function () {
+        controllerFactory.loadNav();
 
         controllerFactory.loadAuthPage()
             .then(function (data) {
@@ -46,6 +48,8 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
 
     // TO DO -think of better way
     router.route("/logout", function () {
+        controllerFactory.loadNav();
+
         controllerFactory.processLogout()
              .then(function (data) {
                  controllerFactory.loadNav();
@@ -56,6 +60,8 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
     });
 
     router.route("/categories/:id", function (id) {
+        controllerFactory.loadNav();
+
         controllerFactory.loadRecipesByCategoryPage(id);
     });
 
@@ -65,17 +71,28 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
     });
 
     router.route("/addrecipe", function () {
-        alert("create recipe");
+        controllerFactory.loadNav();
 
+
+        controllerFactory.loadCreateRecipePage()
+         .then(function (id) {
+             router.navigate("/recipe/:"+ id);
+         }, function (err) {
+             router.navigate("/auth");
+         });
     });
 
 
     router.route("/allRecipes", function () {
+        controllerFactory.loadNav();
+
         controllerFactory.loadAllRecipes();
 
     });
 
     $(function () {
+        controllerFactory.loadNav();
+
         controllerFactory.renderLayouts();
         router.start("/");
     });

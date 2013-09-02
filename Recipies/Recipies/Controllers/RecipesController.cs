@@ -89,14 +89,18 @@ namespace Recipies.Controllers
 
                 foreach (var product in recipe.Products)
                 {
+                    var productToAdd = context.Products.FirstOrDefault(x => x.Title == product.Name);
+
+                    if (productToAdd == null)
+                    {
+                        productToAdd = new Product { Title = product.Name };
+                    }
+
                     addedRecipe.Products.Add(new Ingredient()
                     {
-                        Product = new Product()
-                        {
-                            Title = product.Name
-                        },
+                        Product = productToAdd,
                         Quantity = product.Quantity,
-                        Mesaurement = Measurement.Liter
+                        Mesaurement = (Measurement)Enum.Parse(typeof(Measurement), product.Measurement)
 
                     });
                 }

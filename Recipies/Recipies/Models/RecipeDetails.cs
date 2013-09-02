@@ -48,7 +48,7 @@ namespace Recipies.Models
                     CreatorUser = x.Creator.Username,
                     Rating = x.Fans.Count,
                     Products = x.Products.Select(
-                    p => new ProductDetails() { Name = p.Product.Title, Quantity = p.Quantity }).Distinct()
+                    p => new ProductDetails() { Name = p.Product.Title, Quantity = p.Quantity, Measurement = p.Mesaurement.ToString() }).Distinct()
                 };
             }
         }
@@ -58,5 +58,6 @@ namespace Recipies.Models
     {
         public string Name { get; set; }
         public int Quantity { get; set; }
+        public string Measurement { get; set; }
     }
 }

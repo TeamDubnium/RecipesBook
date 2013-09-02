@@ -9,6 +9,27 @@ namespace Recipies
     {
         public static void Register(HttpConfiguration config)
         {
+
+            config.Routes.MapHttpRoute(
+               name: "ProductsApiMeasurements",
+               routeTemplate: "api/products/measurements",
+               defaults: new
+               {
+                   controller = "products",
+                   action = "measurements"
+               }
+           );
+
+            config.Routes.MapHttpRoute(
+                name: "ProductsApi",
+                routeTemplate: "api/products",
+                defaults: new
+                {
+                    controller = "products",
+                    action = "all"
+                }
+            );
+
             config.Routes.MapHttpRoute(
                 name: "RecipesApi",
                 routeTemplate: "api/recipes/{action}/{id}",

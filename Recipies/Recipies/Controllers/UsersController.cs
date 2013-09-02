@@ -132,7 +132,7 @@ namespace Recipies.Controllers
                     dbContext.SaveChanges();
                 }
 
-                var response = this.Request.CreateResponse(HttpStatusCode.OK, string.Empty);
+                var response = this.Request.CreateResponse(HttpStatusCode.NoContent);
                 return response;
             }
         }

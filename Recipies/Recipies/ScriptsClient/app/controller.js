@@ -25,7 +25,7 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
                             console.log();
 
                             if (that.persister.isUserLoggedIn()) {
-
+                                $('#menu').append($('<li><a href="#/recipes/favorites">Favorites</a></li>'));
                                 $("#menu").append($('<li><a href="#/logout">Logout</a></li>'));
                             }
                             else {
@@ -102,8 +102,36 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
         },
 
         loadCreateRecipePage: function () {
+            var that = this;
 
+            var promise = new RSVP.Promise(function (resolve, reject) {
+                if (!that.persister.isUserLoggedIn()) {
+                    reject("user is not logedin");
+                }
+                else {
 
+                    that.viewFactory.createRecipePageView()
+                    .then(function (viewHtml) {
+
+                        that.viewModelFactory.buildCreateRecipeFormVM(function (id) {
+                            console.log("callback");
+                            resolve(id);
+                        }).then(function (vm) {
+
+                            
+                            var view = new kendo.View(viewHtml, { model: vm });
+                            that.layout.showIn("#content", view);
+                           
+                        }, function (err) {
+                            console.log(err);
+                        })
+                        
+                    }, function (err) {
+                        console.log(err);
+                    });
+                }
+            });
+            return promise;
         },
 
 

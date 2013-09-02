@@ -72,6 +72,8 @@ define(["jquery", "class", ], function ($) {
 							.then(function (name) {
 							    displayName = name;
 							    successCallback();
+							}, function (err) {
+							    this.set("message", err);
 							});
                 },
                 registerUser: function (e) {
@@ -80,6 +82,8 @@ define(["jquery", "class", ], function ($) {
 							.then(function (name) {
 							    displayName = name;
 							    successCallback();
+							}, function (err) {
+							    this.set("message", err);
 							});
                 }
             });
@@ -117,7 +121,7 @@ define(["jquery", "class", ], function ($) {
                     return categoriesViewModel;
 
                 }, function (err) {
-                    console.log(err)
+                    console.log(err);
                 });
 
             return promise;
@@ -125,28 +129,83 @@ define(["jquery", "class", ], function ($) {
 
         buildCreateRecipeFormVM: function (successCallback) {
             var self = this;
-            var viewModel = new kendo.observable({
-                title: "DonchoMinkov",
-                password: "Minkov",
-                message: "Common!",
-                createRecipe: function (e) {
-                    return self.persister.users
-                        .login(this.get("username"), this.get("password"))
-                            .then(function (name) {
-                                displayName = name;
-                                successCallback();
-                            });
-                },
-                registerUser: function (e) {
-                    return self.persister.users
-                        .register(this.get("username"), this.get("password"))
-                            .then(function (name) {
-                                displayName = name;
-                                successCallback();
-                            });
-                }
+
+            var promise = new RSVP.Promise(function (resolve, reject) {
+
+                self.persister.products.all()
+                   .then(function (products) {
+
+                       self.persister.products.measurements()
+                        .then(function (measurements) {
+
+                            self.persister.categories.all()
+                                .then(function (categories) {
+
+                                    var viewModel = {
+                                        title: "Recipe title",
+                                        content: "Recipe content goes here",
+                                        product: "",
+                                        measurement: "",
+                                        quantity: "",
+                                        category: "",
+                                        message: "Common!",
+                                        products: products,
+                                        measurements: measurements,
+                                        categories: categories,
+                                        slectedProducts: [],
+
+                                        createRecipe: function (e) {
+
+                                            
+                                            var promiseCreateRecipe =
+                                            self.persister.recipes
+                                                .add({ title: this.get("title"), content: this.get("content"), "category-name": this.get("category"), products: this.get("slectedProducts") })
+                                                    .then(function (addedRecipe) {
+                                                        console.log(addedRecipe);
+                                                        successCallback(addedRecipe.Id);
+                                                    }, function (err) {
+                                                        this.set("message", err);
+                                                    });
+
+                                            this.set("title", "");
+                                            this.set("content", "");
+                                            this.set("measurement", "");
+
+                                            return promiseCreateRecipe;
+                                        },
+
+                                        addProduct: function (e) {
+
+                                            var prod = this.get("slectedProducts");
+                                            prod.push({ "name": this.get("product"), "quantity": this.get("quantity"), measurement: this.get("measurement") });
+                                           
+                                            this.set("slectedProducts", prod);
+
+                                            this.set("product", "");
+                                            this.set("quantity", "");
+                                            this.set("measurement", "");
+
+                                        }
+
+                                    };
+                                    var createRecipeViewModel = new kendo.observable(viewModel);
+
+                                    resolve(createRecipeViewModel);
+
+                                }, function (err) {
+                                    console.log(err);
+                                })
+
+                        }, function (err) {
+                            console.log(err);
+                        })
+
+                   }, function (err) {
+                       console.log(err);
+                   });
             });
-            return viewModel;
+            return promise;
+
         }
     });
 

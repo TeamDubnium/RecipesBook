@@ -89,15 +89,12 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
         init: function (apiUrl) {
             this.apiUrl = apiUrl;
         },
-        add: function (username, password) {
+        add: function (recipe) {
             var self = this;
+            var header = { "X-sessionKey": sessionKey };
             var promise = new RSVP.Promise(function (resolve, reject) {
-                var recipe = {
-                    title: title,
-                    content: content,
-                    products: products
-                };
-                return httpRequester.postJSON(self.apiUrl + "/add", recipe)
+                
+                return httpRequester.postJSON(self.apiUrl + "/add", recipe, header)
 					.then(function (data) {
 					    saveSession(data);
 					    resolve(data);
@@ -110,16 +107,29 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
         },
     });
 
+    var ProductsPersister = Class.create({
+        init: function (apiUrl) {
+            this.apiUrl = apiUrl;
+        },
+        all: function () {
+            return httpRequester.getJSON(this.apiUrl);
+        },
+        measurements: function () {
+            return httpRequester.getJSON(this.apiUrl + '/measurements');
+        },
+    });
+
     var DataPersister = Class.create({
         init: function (apiUrl) {
             this.apiUrl = apiUrl;
             this.categories = new CategoriesPersister(this.apiUrl + "/categories");
             this.users = new UsersPersister(this.apiUrl + "/users");
             this.recipes = new RecipesPersister(this.apiUrl + "/recipes");
+            this.products = new ProductsPersister(this.apiUrl + "/products");
         },
 
         isUserLoggedIn: function () {
-            var isLoggedIn = username != null && sessionKey != null;
+            var isLoggedIn = sessionKey;
             return isLoggedIn;
         },
         getCurrentUsername: function () {
