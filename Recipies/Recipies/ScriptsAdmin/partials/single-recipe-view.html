@@ -1,0 +1,15 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <h2>{{recipe.title}}</h2>
+    <p ng-repeat="product in recipe.protucts">{{product}}</p>
+    <p>Category:<strong>{{recipe.category-name}}</strong> By: <strong>{{recipe.creator}}</strong> Published on: <strong>{{recipe.publish-date}}</strong> Likes: <strong>{{recipe.likes}}</strong></p>
+    <fieldset>
+        <legend>Delete Recipe</legend>
+        <button ng-click="deleteRecipe()">Delete Recipe</button>
+    </fieldset>
+</body>
+</html>

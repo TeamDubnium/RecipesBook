@@ -23,7 +23,7 @@ namespace Recipies.Controllers
             return model;
         }
 
-        [ActionName("recipes")]
+        [ActionName("categories")]
         public IQueryable<RecipeModel> GetByCategory(int id)
         {
 

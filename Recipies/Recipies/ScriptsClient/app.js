@@ -90,6 +90,11 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
 
     });
 
+    router.route("/recipes/favourites", function () {
+        controllerFactory.loadFavouriteRecipes();
+
+    });
+
     $(function () {
         controllerFactory.loadNav();
 
