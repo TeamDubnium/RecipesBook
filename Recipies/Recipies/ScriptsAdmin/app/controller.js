@@ -183,7 +183,7 @@
 
             $scope.deleteRecipe = function () {
 
-                self.persister.category.deleteCategory(id, function () {
+                self.persister.recipe.deleteRecipe(id, function () {
                     $scope.message = "Recipe Deleted";
                 }, function () {
                     $scope.message = "Cannot Delete Recipe";

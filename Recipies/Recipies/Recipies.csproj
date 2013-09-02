@@ -353,6 +353,7 @@
     <Content Include="ScriptsAdmin\libs\angular-scenario.js" />
     <Content Include="ScriptsAdmin\libs\angular.js" />
     <Content Include="ScriptsAdmin\libs\class.js" />
+    <Content Include="ScriptsAdmin\libs\jasmine.js" />
     <Content Include="ScriptsAdmin\libs\jquery-2.0.3.js" />
     <Content Include="ScriptsAdmin\libs\require.js" />
     <Content Include="ScriptsAdmin\libs\sha1.js" />
