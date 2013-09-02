@@ -1,0 +1,17 @@
+﻿<div data-bind="source: recipe.title"></div>
+
+<div>
+    Number of people who like this page: <span data-bind="source: recipe.likes"></span>
+    <button id="like" data-bind="click: likeRecipe">Like</button>
+</div>
+
+<strong>Products: </strong>
+<ul data-template="products-template" data-bind="source: recipe.products" id="products-menu">
+</ul>
+
+<script type="text/x-kendo-template" id="products-template">
+   <li>
+     #: Name # - #: Quantity #
+    </li>
+</script>
+<div>How to make this delicious gift from the gods: <span data-bind="source: recipe.content"></span></div>

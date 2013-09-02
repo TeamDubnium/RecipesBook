@@ -66,8 +66,8 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
     });
 
     router.route("/recipe/:id", function (id) {
-        alert(id);
-        // detail view recipe
+        controllerFactory.loadSingleRecipePage(id)
+
     });
 
     router.route("/addrecipe", function () {
@@ -76,7 +76,7 @@ require(["jquery", "app/controller", "kendoWeb"], function ($, controller) {
 
         controllerFactory.loadCreateRecipePage()
          .then(function (id) {
-             router.navigate("/recipe/:"+ id);
+             router.navigate("/recipe/:" + id);
          }, function (err) {
              router.navigate("/auth");
          });
