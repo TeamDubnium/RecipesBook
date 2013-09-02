@@ -13,6 +13,7 @@ namespace Recipies.Controllers
     public class RecipesController : BaseApiController
     {
         [HttpGet]
+        [ActionName("all")]
         public HttpResponseMessage GetAll()
         {
             var responseMsg = this.PerformOperationAndHandleExceptions(() =>
@@ -45,11 +46,25 @@ namespace Recipies.Controllers
 
                      // CheckSession(context);
 
-                     var recipeEntities = context.Recipes;
-                     var model = recipeEntities.Where(x => x.Id == id)
-                         .Select(RecipeDetails.FromRecipeToRecipeDetails)
-                         .FirstOrDefault();
+                     var recipeEntities = context.Recipes.Include("Categories");
+                    // var model = recipeEntities.Where(x => x.Id == id)
+                    //     .Select(RecipeDetails.FromRecipeToRecipeDetails)
+                    //     .FirstOrDefault();
 
+
+                   var model =
+                       (from r in recipeEntities
+                        where r.Id == id
+                        select new RecipeModel()
+                        {
+                            Title = r.Title,
+                            CreatorUser = r.Creator.Username,
+                            CategoryName = r.Category.Title,
+                            PublishDate = r.PublishDate,
+                            Rating = r.Fans.AsQueryable().Count(),
+                            Id = r.Id
+                   
+                        });
                      if (model == null)
                      {
                          throw new ArgumentException("No such recipe");

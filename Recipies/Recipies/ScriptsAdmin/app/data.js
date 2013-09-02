@@ -184,7 +184,7 @@ window.persister = (function () {
             this.requester = requester;
         },
         getAll: function (success, error) {
-            var url = this.rootUrl;
+            var url = this.rootUrl + "/all";
 
             this.requester.get(url)
                .success(success)

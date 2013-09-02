@@ -43,6 +43,12 @@ namespace Recipies.Data
                     a.MapLeftKey("UserId");
                     a.MapRightKey("Id");
                 });
+
+            //modelBuilder.Entity<User>()
+            //    .HasOptional(u => u.MyRecipes)
+            //    .WithMany()
+            //    .WillCascadeOnDelete(true);
+            //    
         }
     }
 }

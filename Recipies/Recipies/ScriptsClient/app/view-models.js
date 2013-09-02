@@ -178,7 +178,7 @@ define(["jquery", "class", ], function ($) {
                                             
                                             var promiseCreateRecipe =
                                             self.persister.recipes
-                                                .add({ title: this.get("title"), content: this.get("content"), "category-name": this.get("category"), products: this.get("slectedProducts") })
+                                                .add({ title: this.get("title"), content: this.get("content"), "categoryName": this.get("category"), products: this.get("slectedProducts") })
                                                     .then(function (addedRecipe) {
                                                         console.log(addedRecipe);
                                                         successCallback(addedRecipe.Id);

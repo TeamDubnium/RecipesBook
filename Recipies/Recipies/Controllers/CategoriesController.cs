@@ -23,7 +23,7 @@ namespace Recipies.Controllers
             return model;
         }
 
-        [ActionName("categories")]
+        [ActionName("recipes")]
         public IQueryable<RecipeModel> GetByCategory(int id)
         {
 
@@ -39,7 +39,20 @@ namespace Recipies.Controllers
          
            var recipeEntities = context.Categories.FirstOrDefault(c => c.Id == id).Recipes.AsQueryable();
 
-            var models = recipeEntities.Select(RecipeModel.FromRecipeToRecipeModel);
+            //var models = recipeEntities.Select(RecipeModel.FromRecipeToRecipeModel);
+
+            var models =
+                       (from r in recipeEntities
+                        select new RecipeModel()
+                        {
+                            Title = r.Title,
+                            CreatorUser = r.Creator.Username,
+                            CategoryName = r.Category.Title,
+                            PublishDate = r.PublishDate,
+                            Rating = r.Fans.AsQueryable().Count(),
+                            Id = r.Id
+
+                        });
 
             return models;
         }

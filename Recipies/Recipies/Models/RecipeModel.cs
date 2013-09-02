@@ -33,13 +33,13 @@ namespace Recipies.Models
         [JsonProperty("title")]
         public string Title { get; set; }
 
-        [JsonProperty("category-name")]
+        [JsonProperty("categoryName")]
         public string CategoryName { get; set; }
 
         [JsonProperty("creator")]
         public string CreatorUser { get; set; }
 
-        [JsonProperty("publish-date")]
+        [JsonProperty("publishDate")]
         public DateTime PublishDate { get; set; }
 
         [JsonProperty("likes")]

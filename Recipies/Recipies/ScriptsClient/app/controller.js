@@ -25,7 +25,7 @@ define(["jquery", "app/view-models", "app/views", "persisters", "kendoWeb", "cla
                             console.log();
 
                             if (that.persister.isUserLoggedIn()) {
-                                $('#menu').append($('<li><a href="#/recipes/favorites">Favorites</a></li>'));
+                                $('#menu').append($('<li><a href="#/recipes/favourites">Favourites</a></li>'));
                                 $("#menu").append($('<li><a href="#/logout">Logout</a></li>'));
                             }
                             else {

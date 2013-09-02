@@ -24,7 +24,7 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
             this.apiUrl = apiUrl;
         },
         all: function () {
-            return httpRequester.getJSON(this.apiUrl);
+            return httpRequester.getJSON(this.apiUrl );
         },
         byId: function (id) {
             var url = this.apiUrl + "/" + id + "/recipes";
@@ -103,11 +103,13 @@ define(["jquery", "httpRequester", "rsvp", "class", "cryptoJs"], function ($, ht
             return promise;
         },
         all: function () {
-            return httpRequester.getJSON(this.apiUrl);
+            var url = this.apiUrl + "/all";
+            return httpRequester.getJSON(url);
         },
         favourites: function () {
             var url = this.apiUrl + "/favourites";
-            return httpRequester.getJSON(url);
+            var header = { "X-sessionKey": sessionKey };
+            return httpRequester.getJSON(url, header);
         },
     });
 
