@@ -43,6 +43,9 @@
         $scope.message = "";
         $scope.loginUser = function () {
             var user = $scope.user;
+            debugger;
+            user.username = user.username.htmlEscape();
+            user.password = user.password.htmlEscape();
 
             self.persister.user.login(user, function () {
                 document.location = "#/";
@@ -85,8 +88,8 @@
             $scope.changePassword = function () {
                 var userData = {
                     id: id,
-                    username: $scope.user.username,
-                    password: $scope.password
+                    username: $scope.user.username.htmlEscape(),
+                    password: $scope.password.htmlEscape()
                 };
                 self.persister.user.changePassword(userData, function () {
                     $scope.message = "Password Changed";

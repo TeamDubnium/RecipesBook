@@ -44,21 +44,7 @@ namespace Recipies.Data
                     a.MapRightKey("Id");
                 });
 
-            modelBuilder.Entity<User>()
-                .HasOptional(u => u.MyRecipes)
-                .WithMany()
-                .WillCascadeOnDelete(true);
-
-            modelBuilder.Entity<User>()
-                .HasOptional(u => u.Favorites)
-                .WithMany()
-                .WillCascadeOnDelete(true);
-
-            modelBuilder.Entity<Recipe>()
-               .HasRequired(r=> r.Creator)
-               .WithMany()
-               .WillCascadeOnDelete(true);
-
+          
         }
     }
 }
